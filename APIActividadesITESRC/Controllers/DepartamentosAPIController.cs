@@ -14,6 +14,7 @@ namespace APIActividadesITESRC.Controllers
     [ApiController]
     public class DepartamentosAPIController : ControllerBase
     {
+
         public DepartamentosRepository Repository { get; }
 
         public DepartamentosAPIController(DepartamentosRepository repository)
@@ -21,10 +22,10 @@ namespace APIActividadesITESRC.Controllers
             Repository = repository;       
         }
 
-        [HttpPost]
+        [HttpPost("Agregar")]
         public IActionResult AgregarDepartamento(DepartamentoDTO dto)
         {
-            DepartamentoValidator validator = new();
+            DepartamentoValidator validator = new(Repository.Context);
             var resultados = validator.Validate(dto);
 
             if (resultados.IsValid)
@@ -46,24 +47,25 @@ namespace APIActividadesITESRC.Controllers
         }
 
 
-        [HttpGet]
+        [HttpGet("ObtenerDepartamentos")]
         public IActionResult GetAllDepartamentos()
         {
             var departamentos = Repository.GetAll().Select(x=> new DepartamentoDTO
             {
                 Nombre = x.Nombre,
                 IdSuperior= x.IdSuperior??0,
-                Username = x.Username
+                Username = x.Username,
+                Password = x.Password
             });
 
             return Ok(departamentos);    
         }
 
 
-        [HttpPut("{Id}")]
+        [HttpPut("Editar")]
         public IActionResult EditarDepartemento(DepartamentoDTO dto)
         {
-            DepartamentoValidator validator = new();
+            DepartamentoValidator validator = new(Repository.Context);
             var results = validator.Validate(dto);
             if (results.IsValid)
             {
@@ -87,7 +89,7 @@ namespace APIActividadesITESRC.Controllers
         }
 
 
-        [HttpDelete("{Id}")]
+        [HttpDelete("Eliminar")]
         public IActionResult EliminarDepartamento(int id)
         {
             var entidadDepartamento = Repository.GetById(id);

@@ -38,17 +38,5 @@ namespace APIActividadesITESRC.Repositories
             Context.Remove(departamento);
             Context.SaveChanges();
         }
-
-
-        public bool CompararNombre(string text)
-        {
-            return !Context.Departamentos.Any(x => x.Nombre == text);
-        }
-
-        public bool CompararUser(string text)
-        {
-            return !Context.Departamentos.Any(x => x.Username == text);
-        }
-
     }
 }
