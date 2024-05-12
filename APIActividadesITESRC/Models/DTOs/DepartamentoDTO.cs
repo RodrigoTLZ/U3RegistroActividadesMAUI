@@ -14,11 +14,5 @@ namespace APIActividadesITESRC.Models.DTOs
         public string Password { get; set; } = null!;
 
         public int? IdSuperior { get; set; }
-
-        public virtual ICollection<Actividades> Actividades { get; set; } = new List<Actividades>();
-
-        public virtual Departamentos? IdSuperiorNavigation { get; set; }
-
-        public virtual ICollection<Departamentos> InverseIdSuperiorNavigation { get; set; } = new List<Departamentos>();
     }
 }

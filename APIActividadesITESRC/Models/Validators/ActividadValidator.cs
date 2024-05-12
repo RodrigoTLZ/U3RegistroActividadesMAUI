@@ -8,7 +8,6 @@ namespace APIActividadesITESRC.Models.Validators
         public ActividadValidator()
         {
             RuleFor(x => x.Titulo).NotEmpty().WithMessage("El titulo no debe estar vacio.");
-            
         }
     }
 }

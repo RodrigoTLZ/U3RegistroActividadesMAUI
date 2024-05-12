@@ -12,7 +12,6 @@ namespace APIActividadesITESRC.Controllers
     public class ActividadesAPIController : ControllerBase
     {
         public ActividadesRepository Repository { get; }
-
         public ActividadesAPIController(ActividadesRepository repository)
         {
             Repository = repository;
@@ -20,7 +19,7 @@ namespace APIActividadesITESRC.Controllers
 
 
         [HttpPost]
-        public IActionResult Post(ActividadDTO dto)
+        public IActionResult PublicarActividad(ActividadDTO dto)
         {
             ActividadValidator validator = new();
             var resultados = validator.Validate(dto);
@@ -29,15 +28,13 @@ namespace APIActividadesITESRC.Controllers
             {
                 Actividades entity = new()
                 {
-                    Id = 0,
                     Descripcion = dto.Descripcion,
                     FechaCreacion = DateTime.UtcNow,
                     FechaActualizacion = DateTime.UtcNow,
                     IdDepartamento = dto.IdDepartamento,
-                    //  IdDepartamentoNavigation = dto.IdDepartamentoNavigation
-                    Estado = dto.Estado,
+                    Estado = 1,
                     Titulo = dto.Titulo,
-                    FechaRealizacion = dto.FechaRealizacion,
+                    FechaRealizacion = dto.FechaRealizacion
                 };
                 Repository.Insert(entity);
                 return Ok();
@@ -49,19 +46,14 @@ namespace APIActividadesITESRC.Controllers
         }
 
         [HttpGet]
-        public IActionResult Get()
+        public IActionResult GetAllActividades()
         {
             var actividades = Repository.GetAll().Select(x=> new ActividadDTO
             {
                 Titulo =x.Titulo,
                 Descripcion=x.Descripcion,
-                Estado=x.Estado,
-                FechaActualizacion=x.FechaActualizacion,
-                FechaCreacion =x.FechaCreacion,
                 FechaRealizacion=x.FechaRealizacion,
-                Id = x.Id,
                 IdDepartamento=x.IdDepartamento,
-               // IdDepartamentoNavigation = x.IdDepartamentoNavigation
             });
 
             return Ok(actividades);
@@ -69,7 +61,7 @@ namespace APIActividadesITESRC.Controllers
 
 
         [HttpPut("{Id}")]
-        public IActionResult Put(ActividadDTO dto)
+        public IActionResult EditarActividad(ActividadDTO dto)
         {
             ActividadValidator validator = new();
             var results = validator.Validate(dto);
@@ -92,27 +84,26 @@ namespace APIActividadesITESRC.Controllers
                     return Ok();
                 }
             }
-            return BadRequest(results.Errors.Select(x => x.ErrorMessage));
+            else
+            {
+                return BadRequest(results.Errors.Select(x => x.ErrorMessage));
+            }
 
         }
 
 
         [HttpDelete("{Id}")]
-        public IActionResult Delete(int id)
+        public IActionResult EliminarActividad(int id)
         {
             var entidadActividad = Repository.GetById(id);
-
             if(entidadActividad == null)
             {
                 return NotFound();
             }
-
-            //entidadActividad.Estado = "Eliminado"
+            entidadActividad.Estado = 2;
             entidadActividad.FechaActualizacion = DateTime.UtcNow;
             Repository.Update(entidadActividad);
             return Ok();
         }
-
-
     }
 }

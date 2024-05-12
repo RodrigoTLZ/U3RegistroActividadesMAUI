@@ -1,4 +1,5 @@
 ﻿using APIActividadesITESRC.Models.Entities;
+using Microsoft.EntityFrameworkCore;
 
 namespace APIActividadesITESRC.Repositories
 {
@@ -12,7 +13,7 @@ namespace APIActividadesITESRC.Repositories
 
         public IEnumerable<Actividades> GetAll()
         {
-            return Context.Actividades.OrderBy(x => x.Titulo);
+            return Context.Actividades.OrderBy(x => x.Titulo).Include(x=>x.IdDepartamentoNavigation);
         }
 
         public Actividades? GetById(int id)

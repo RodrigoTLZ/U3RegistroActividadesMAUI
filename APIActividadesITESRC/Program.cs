@@ -1,9 +1,13 @@
 using APIActividadesITESRC.Models.Entities;
+using APIActividadesITESRC.Repositories;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddDbContext<ItesrcneActividadesContext>(x => x.UseMySql("server=204.93.216.11;database=itesrcne_actividades;user=itesrcne_deptos;password=sistemaregistrotec24", Microsoft.EntityFrameworkCore.ServerVersion.Parse("10.3.29-mariadb")));
+builder.Services.AddTransient<DepartamentosRepository>();
+builder.Services.AddTransient<ActividadesRepository>();
+
 
 
 builder.Services.AddControllers();

@@ -1,4 +1,5 @@
 ﻿using APIActividadesITESRC.Models.Entities;
+using Microsoft.EntityFrameworkCore;
 
 namespace APIActividadesITESRC.Repositories
 {
@@ -12,7 +13,7 @@ namespace APIActividadesITESRC.Repositories
 
         public IEnumerable<Departamentos> GetAll()
         {
-            return Context.Departamentos.OrderBy(x => x.Nombre);
+            return Context.Departamentos.OrderBy(x => x.Nombre).Include(x=>x.InverseIdSuperiorNavigation);
         }
 
         public Departamentos? GetById(int id)
@@ -36,6 +37,17 @@ namespace APIActividadesITESRC.Repositories
         {
             Context.Remove(departamento);
             Context.SaveChanges();
+        }
+
+
+        public bool CompararNombre(string text)
+        {
+            return !Context.Departamentos.Any(x => x.Nombre == text);
+        }
+
+        public bool CompararUser(string text)
+        {
+            return !Context.Departamentos.Any(x => x.Username == text);
         }
 
     }
