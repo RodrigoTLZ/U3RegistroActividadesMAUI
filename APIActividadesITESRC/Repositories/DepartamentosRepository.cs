@@ -21,6 +21,11 @@ namespace APIActividadesITESRC.Repositories
             return Context.Departamentos.Find(id);
         }
 
+        public Departamentos? GetByEmail(string email)
+        {
+            return Context.Departamentos.Find(email);
+        }
+
         public void Insert(Departamentos departamento)
         {
             Context.Departamentos.Add(departamento);

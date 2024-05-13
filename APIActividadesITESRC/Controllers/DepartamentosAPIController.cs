@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using System.Security.Cryptography;
 using System.Reflection.Metadata.Ecma335;
 using System.Text;
+using APIActividadesITESRC.Helper;
 
 namespace APIActividadesITESRC.Controllers
 {
@@ -31,7 +32,7 @@ namespace APIActividadesITESRC.Controllers
                 Departamentos entity = new()
                 {
                     Nombre = dto.Nombre,
-                    Password = EncriptarSHA512(dto.Password),
+                    Password = Encriptacion.EncriptarSHA512(dto.Password),
                     Username = dto.Username,
                     IdSuperior = dto.IdSuperior,
                 };
@@ -71,7 +72,7 @@ namespace APIActividadesITESRC.Controllers
                 if(departamento != null)
                 {
                    departamento.Nombre = dto.Nombre;
-                   departamento.Password = EncriptarSHA512(dto.Password);
+                   departamento.Password = Encriptacion.EncriptarSHA512(dto.Password);
                    departamento.IdSuperior = dto.IdSuperior;
 
                     Repository.Update(departamento);
@@ -103,20 +104,20 @@ namespace APIActividadesITESRC.Controllers
             }
         }
 
-        static string EncriptarSHA512(string password)
-        {
-            using (SHA512 sha512 = SHA512.Create())
-            {
-                byte[] bytes = Encoding.UTF8.GetBytes(password);
-                byte[] hash = sha512.ComputeHash(bytes);
+        //static string EncriptarSHA512(string password)
+        //{
+        //    using (SHA512 sha512 = SHA512.Create())
+        //    {
+        //        byte[] bytes = Encoding.UTF8.GetBytes(password);
+        //        byte[] hash = sha512.ComputeHash(bytes);
 
-                StringBuilder builder = new StringBuilder();
-                foreach (byte item in hash)
-                {
-                    builder.Append(item.ToString("x2"));
-                }
-                return builder.ToString();
-            }
-        }
+        //        StringBuilder builder = new StringBuilder();
+        //        foreach (byte item in hash)
+        //        {
+        //            builder.Append(item.ToString("x2"));
+        //        }
+        //        return builder.ToString();
+        //    }
+        //}
     }
 }
