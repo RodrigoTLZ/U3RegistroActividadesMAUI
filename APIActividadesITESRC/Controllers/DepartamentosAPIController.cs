@@ -14,9 +14,7 @@ namespace APIActividadesITESRC.Controllers
     [ApiController]
     public class DepartamentosAPIController : ControllerBase
     {
-
         public DepartamentosRepository Repository { get; }
-
         public DepartamentosAPIController(DepartamentosRepository repository)
         {
             Repository = repository;       
