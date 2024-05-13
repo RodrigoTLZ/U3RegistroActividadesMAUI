@@ -4,10 +4,11 @@ namespace APIActividadesITESRC.Helper
 {
     public class GeneradorToken
     {
-        public string GetToken(string token)
+        public string GetToken(string nombre)
         {
             List<Claim> claims = new();
-            claims.Add(new Claim(ClaimTypes.Role, "Admin"));
+            claims.Add(new Claim(ClaimTypes.Role, nombre));
+
 
         }
     }
