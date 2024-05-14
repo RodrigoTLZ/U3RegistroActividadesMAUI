@@ -2,11 +2,52 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="APIActividadesMAUI.Views.ListadoActividadesView"
-             Title="ListadoActividadesView">
-    <VerticalStackLayout>
-        <Label 
-            Text="Welcome to .NET MAUI!"
-            VerticalOptions="Center" 
-            HorizontalOptions="Center" />
-    </VerticalStackLayout>
+             >
+
+    <Grid Margin="0">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="0.1*"></RowDefinition>
+            <RowDefinition Height="0.78*"></RowDefinition>
+            <RowDefinition Height="0.12*"></RowDefinition>
+        </Grid.RowDefinitions>
+        <Label Grid.Row="0" Text="Lista de Actividades" FontSize="25" HorizontalTextAlignment="Center" TextColor="White" FontAttributes="Bold" 
+               HorizontalOptions="FillAndExpand" Padding="0,10,0,10" BackgroundColor="BlueViolet" />
+
+
+        <!-- Colección de actividades -->
+        <CollectionView Grid.Row="1" x:Name="activitiesCollectionView"
+                 SelectionMode="Single"
+                 EmptyView="No hay actividades agregadas">
+            <CollectionView.ItemTemplate>
+                <DataTemplate>
+                    <StackLayout Padding="10" Margin="0,5" BackgroundColor="#f2f2f2">
+                        <Label Text="Titulo" FontSize="Medium" FontAttributes="Bold" />
+                        <Label Text="Descripcion" FontSize="Small" />
+                        <Label Text="Fecha"/>
+                        <!--<Label Text="{Binding ActivityDate, StringFormat='Fecha de Creación: {0:d}'}" FontSize="Small" />-->
+                        <Label Text="Departamento" FontSize="Small" />
+                    </StackLayout>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+
+        <!-- Botones de acción -->
+        <StackLayout Grid.Row="2" VerticalOptions="EndAndExpand" Margin="5,0,5,5" 
+                     HorizontalOptions="FillAndExpand">
+            <StackLayout.Resources>
+                <Style TargetType="Button">
+                    <Setter Property="HeightRequest" Value="45"></Setter>
+                    <Setter Property="WidthRequest" Value="115"></Setter>
+                    <Setter Property="BackgroundColor" Value="BlueViolet"></Setter>
+                    <Setter Property="FontAttributes" Value="Bold"></Setter>
+                    <Setter Property="FontSize" Value="Subtitle"></Setter>
+                </Style>
+            </StackLayout.Resources>
+            <StackLayout Orientation="Horizontal" HorizontalOptions="Center">
+                <Button Clicked="Button_Clicked" Text="&#10133; Agregar" Margin="0,0,3,0"/>
+                <Button Text="&#9998; Editar" Margin="0,0,3,0"/>
+                <Button Text="&#128465; Eliminar"/>
+            </StackLayout>
+        </StackLayout>
+    </Grid>
 </ContentPage>

@@ -3,10 +3,35 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="APIActividadesMAUI.Views.ActividadesView.AgregarActividadView"
              Title="AgregarActividadView">
-    <VerticalStackLayout>
-        <Label 
-            Text="Welcome to .NET MAUI!"
-            VerticalOptions="Center" 
-            HorizontalOptions="Center" />
-    </VerticalStackLayout>
+
+    <StackLayout Padding="20">
+        <!-- Título de la actividad -->
+        <Label Text="Titulo de la actividad"></Label>
+        <Entry Placeholder="Título de la actividad" x:Name="titleEntry" />
+
+        <!-- Descripción de la actividad -->
+        <Editor Placeholder="Descripción de la actividad" x:Name="descriptionEditor" HeightRequest="100" />
+
+        <!-- Fecha de creación de la actividad -->
+        <DatePicker Date="{Binding ActivityDate}" />
+
+        <!-- Departamento asignado -->
+        <Picker x:Name="departmentPicker" Title="Departamento asignado">
+            <Picker.ItemsSource>
+                <x:String>Departamento 1</x:String>
+                <x:String>Departamento 2</x:String>
+                <x:String>Departamento 3</x:String>
+                <!-- Agrega más departamentos según sea necesario -->
+            </Picker.ItemsSource>
+        </Picker>
+
+        <!-- Botón para agregar imagen de evidencia -->
+        <Button Text="Agregar imagen de evidencia" />
+
+        <!-- Contenedor para las imágenes de evidencia -->
+        <StackLayout x:Name="evidenceImagesContainer" Orientation="Horizontal" />
+
+        <!-- Botón para guardar la actividad -->
+        <Button Text="Guardar actividad"  />
+    </StackLayout>
 </ContentPage>
