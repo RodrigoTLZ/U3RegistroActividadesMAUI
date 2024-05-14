@@ -9,6 +9,9 @@ namespace APIActividadesITESRC.Helper
             List<Claim> claims = new();
             claims.Add(new Claim(ClaimTypes.Role, nombre));
 
+            return claims.ToString();
+
+
 
         }
     }

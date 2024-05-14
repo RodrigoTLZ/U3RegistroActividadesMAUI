@@ -23,9 +23,6 @@ namespace APIActividadesITESRC.Models.Validators
 
             RuleFor(x => x.Password).NotEmpty().WithMessage("Ingrese una contraseña.");
             RuleFor(x => x.Password).MinimumLength(6).WithMessage("La contraseña debe tener al menos 6 caracteres.");
-
-            //VALIDAR EL ID SUPERIOR PREGUNTAR
-
         }
 
         private bool Comparar(string text)
