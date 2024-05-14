@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace APIActividadesMAUI.Repositories
 {
-    public class RepositoryGeneric<T> where T: class
+    public class RepositoryGeneric<T> where T: class, new()
     {
         SQLiteConnection context;
 
