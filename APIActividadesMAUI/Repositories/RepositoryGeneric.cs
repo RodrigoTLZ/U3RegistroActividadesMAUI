@@ -47,5 +47,14 @@ namespace APIActividadesMAUI.Repositories
         {
             context.Delete(item);
         }
+
+        public void DeleteAll()
+        {
+            var allItems = GetAll();
+            foreach (var item in allItems)
+            {
+                context.Delete(item);
+            }
+        }
     }
 }

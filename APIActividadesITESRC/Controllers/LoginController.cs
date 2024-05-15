@@ -3,6 +3,7 @@ using APIActividadesITESRC.Models.DTOs;
 using APIActividadesITESRC.Repositories;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using System.Security.Claims;
 
 namespace APIActividadesITESRC.Controllers
 {
@@ -11,10 +12,12 @@ namespace APIActividadesITESRC.Controllers
     public class LoginController : ControllerBase
     {
         public DepartamentosRepository Repository { get; }
+        public GeneradorToken jwtHelper;
 
-        public LoginController(DepartamentosRepository repository)
+        public LoginController(DepartamentosRepository repository, GeneradorToken jwtHelper)
         {
             Repository = repository;
+            this.jwtHelper = jwtHelper;
         }
 
         [HttpPost]
@@ -30,8 +33,10 @@ namespace APIActividadesITESRC.Controllers
             {
                 if(usuarioexistente.Password == Encriptacion.EncriptarSHA512(dto.Password))
                 {
-                    GeneradorToken Jwttoken = new();
-                    return Ok(Jwttoken.GetToken(dto.Nombre));
+                    var token = jwtHelper.GetToken(usuarioexistente.Username,
+                        usuarioexistente.Nombre,
+                        new List<Claim> { new Claim("Id", usuarioexistente.Id.ToString()) });
+                    return Ok();
                 }
                 else
                 {

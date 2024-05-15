@@ -1,4 +1,5 @@
-﻿using System;
+﻿using APIActividadesMAUI.Models.Entities;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -17,5 +18,10 @@ namespace APIActividadesMAUI.Models.DTOs
         public string Password { get; set; } = null!;
 
         public int? IdSuperior { get; set; }
+
+        public static implicit operator DepartamentoDTO(Departamento v)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

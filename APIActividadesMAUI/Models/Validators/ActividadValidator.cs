@@ -1,7 +1,12 @@
-﻿using APIActividadesITESRC.Models.DTOs;
+﻿using APIActividadesMAUI.Models.DTOs;
 using FluentValidation;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
-namespace APIActividadesITESRC.Models.Validators
+namespace APIActividadesMAUI.Models.Validators
 {
     public class ActividadValidator:AbstractValidator<ActividadDTO>
     {
