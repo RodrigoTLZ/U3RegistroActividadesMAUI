@@ -7,12 +7,14 @@
     xmlns:views="clr-namespace:APIActividadesMAUI.Views"
     xmlns:viewsA="clr-namespace:APIActividadesMAUI.Views.ActividadesView"
     xmlns:viewsD="clr-namespace:APIActividadesMAUI.Views.DepartamentosView"
+    Shell.NavBarIsVisible="False"
+    Shell.TabBarIsVisible="False"
     Shell.FlyoutBehavior="Disabled"
-    Title="APIActividadesMAUI">
+    Shell.FlyoutItemIsVisible="False">
 
     <ShellContent
-        Title="Home"
-        ContentTemplate="{DataTemplate views:ListadoActividadesView}"
-        Route="Listado" />
+        
+        ContentTemplate="{DataTemplate views:LoginView}"
+        Route="Login" />
 
 </Shell>

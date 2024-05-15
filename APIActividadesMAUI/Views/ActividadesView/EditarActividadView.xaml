@@ -1,12 +1,50 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="APIActividadesMAUI.Views.ActividadesView.EditarActividadView"
-             Title="EditarActividadView">
-    <VerticalStackLayout>
-        <Label 
-            Text="Welcome to .NET MAUI!"
-            VerticalOptions="Center" 
-            HorizontalOptions="Center" />
-    </VerticalStackLayout>
+             x:Class="APIActividadesMAUI.Views.ActividadesView.EditarActividadView">
+    <ScrollView>
+        <StackLayout >
+
+            <Label Text="Editar Actividad" FontSize="25" HorizontalTextAlignment="Center" TextColor="White" FontAttributes="Bold"  
+                   HorizontalOptions="FillAndExpand" Padding="0,10,0,10" BackgroundColor="#2B0B98" FontFamily="Verdana" />
+
+            <StackLayout Margin="10">
+                <!-- Título de la actividad -->
+                <Label Text="Titulo:" FontAttributes="Bold" FontSize="Medium"></Label>
+                <Entry Placeholder="Título de la actividad" x:Name="titleEntry" FontAttributes="Bold" FontSize="15"/>
+
+
+                <!-- Descripción de la actividad -->
+                <Label Text="Descripción:" FontAttributes="Bold" FontSize="Small"></Label>
+                <Editor Placeholder="Descripción de la actividad" x:Name="descriptionEditor" HeightRequest="100" />
+
+                <!-- Fecha de creación de la actividad -->
+                <Label Text="Fecha:" FontAttributes="Bold" FontSize="Small"></Label>
+                <DatePicker Date="{Binding ActivityDate}" />
+
+
+                <!-- Departamento asignado -->
+                <Label Text="Departamento:" FontAttributes="Bold" FontSize="Small"></Label>
+                <Picker x:Name="departmentPicker" Title="Departamento asignado">
+                    <Picker.ItemsSource>
+                        <x:Array Type="{x:Type x:String}">
+                            <x:String>Sistemas Computacionales</x:String>
+                            <x:String>Industrial</x:String>
+                            <x:String>Vinculacion</x:String>
+                        </x:Array>
+                        <!-- Agrega más departamentos según sea necesario -->
+                    </Picker.ItemsSource>
+                </Picker>
+            </StackLayout>
+
+            <StackLayout Orientation="Horizontal" Margin="10,10,0,0">
+                <Button Text="&#128269; Seleccionar Imagen" Clicked="Button_Clicked" VerticalOptions="End" HorizontalOptions="Start"/>
+                <Image x:Name="selectedImage" VerticalOptions="CenterAndExpand" HorizontalOptions="CenterAndExpand"
+            MaximumWidthRequest="200" MaximumHeightRequest="200" Margin="10,0,10,0" />
+            </StackLayout>
+
+            <!-- Botón para guardar la actividad -->
+            <Button Text="&#128190; Guardar actividad" Margin="10,15,10,10"/>
+        </StackLayout>
+    </ScrollView>
 </ContentPage>

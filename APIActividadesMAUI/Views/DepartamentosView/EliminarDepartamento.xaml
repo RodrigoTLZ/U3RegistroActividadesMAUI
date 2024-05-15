@@ -3,10 +3,54 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="APIActividadesMAUI.Views.DepartamentosView.EliminarDepartamento"
              Title="EliminarDepartamento">
-    <VerticalStackLayout>
-        <Label 
-            Text="Welcome to .NET MAUI!"
-            VerticalOptions="Center" 
-            HorizontalOptions="Center" />
-    </VerticalStackLayout>
+    <StackLayout >
+        <Label Text="Agregar Departamento" FontSize="25" HorizontalTextAlignment="Center" TextColor="White" FontAttributes="Bold"
+           HorizontalOptions="FillAndExpand" Padding="0,10,0,10" BackgroundColor="#2B0B98" FontFamily="Verdana" />
+
+        <StackLayout VerticalOptions="CenterAndExpand" Margin="10">
+            <StackLayout.Resources>
+                <Style TargetType="Entry">
+                    <Setter Property="Margin" Value="5,10,5,10"></Setter>
+                    <Setter Property="FontAttributes" Value="Bold"></Setter>
+                    <Setter Property="FontSize" Value="Medium"></Setter>
+                    <Setter Property="FontFamily" Value="Verdana"></Setter>
+                </Style>
+            </StackLayout.Resources>
+            <!-- Nombre del departamento -->
+            <Label Text="Nombre del departamento:" FontAttributes="Bold" FontSize="Medium"></Label>
+            <Entry Placeholder="Nombre del departamento" x:Name="titleEntry" FontAttributes="Bold" FontSize="Large" IsEnabled="False"/>
+
+
+            <!-- Usuario del departamento -->
+            <Label Text="Usuario:" FontAttributes="Bold" FontSize="Medium"></Label>
+            <Entry Placeholder="Usuario"
+                   x:Name="UsuarioEntry"
+                   Keyboard="Default"
+                   ReturnType="Next"
+                   TextColor="Black"
+                   FontAttributes="Bold"
+                   VerticalOptions="Center"
+                   HorizontalOptions="FillAndExpand"
+                   Margin="10,0,10,2" 
+                   IsEnabled="False"/>
+            
+            <!--Contraseña del departamento-->
+            <Label Text="Contraseña:" FontAttributes="Bold" FontSize="Medium"></Label>
+            <Entry Placeholder="Contraseña"
+                   x:Name="ContraseñaEntry"
+                   Keyboard="Default"
+                   ReturnType="Next"
+                   TextColor="Black"
+                   FontAttributes="Bold"
+                   VerticalOptions="Center"
+                   HorizontalOptions="FillAndExpand"
+                   Margin="10,0,10,2"
+                   IsEnabled="False"/>
+
+
+
+            <!-- Botón para eliminar el departamento -->
+            <Button Text="&#128465; Eliminar departamento" Margin="10,15,10,10"/>
+        </StackLayout>
+    </StackLayout>
 </ContentPage>
