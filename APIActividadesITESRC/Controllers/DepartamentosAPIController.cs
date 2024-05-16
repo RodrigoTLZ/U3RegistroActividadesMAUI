@@ -51,6 +51,7 @@ namespace APIActividadesITESRC.Controllers
         {
             var departamentos = Repository.GetAll().Select(x=> new DepartamentoDTO
             {
+                Id = x.Id,
                 Nombre = x.Nombre,
                 IdSuperior= x.IdSuperior??0,
                 Username = x.Username,

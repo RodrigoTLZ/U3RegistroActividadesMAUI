@@ -10,10 +10,11 @@ namespace APIActividadesMAUI
             InitializeComponent();
 
             Thread thread = new Thread(Sincronizador) { IsBackground = true };
+            thread.Start();
             MainPage = new AppShell();
         }
 
-        private async void Sincronizador()
+        async void Sincronizador()
         {
             while (true)
             {

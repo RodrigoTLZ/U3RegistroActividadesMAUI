@@ -19,7 +19,7 @@ namespace APIActividadesMAUI.Services
         {
             cliente = new()
             {
-              //LINK DE LA API  BaseAddress = 
+                BaseAddress = new Uri("https://actividadesteam7.websitos256.com/")
             };
         }
 

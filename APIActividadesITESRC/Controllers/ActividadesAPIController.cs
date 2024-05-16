@@ -2,6 +2,7 @@
 using APIActividadesITESRC.Models.Entities;
 using APIActividadesITESRC.Models.Validators;
 using APIActividadesITESRC.Repositories;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -21,6 +22,8 @@ namespace APIActividadesITESRC.Controllers
         [HttpPost("Publicar")]
         public IActionResult PublicarActividad(ActividadDTO dto)
         {
+            var actividadesDepartamento = int.Parse(User.Identities.SelectMany(ci => ci.Claims).FirstOrDefault(c => c.Type == "DepartamentoId").Value);
+
             ActividadValidator validator = new();
             var resultados = validator.Validate(dto);
 
@@ -31,7 +34,7 @@ namespace APIActividadesITESRC.Controllers
                     Descripcion = dto.Descripcion,
                     FechaCreacion = DateTime.UtcNow,
                     FechaActualizacion = DateTime.UtcNow,
-                    IdDepartamento = dto.IdDepartamento,
+                    IdDepartamento = actividadesDepartamento,
                     Estado = 1,
                     Titulo = dto.Titulo,
                     FechaRealizacion = dto.FechaRealizacion
@@ -48,13 +51,19 @@ namespace APIActividadesITESRC.Controllers
         [HttpGet("Obtener")]
         public IActionResult GetAllActividades()
         {
+            var actividadesDepartamento = int.Parse(User.Identities.SelectMany(ci => ci.Claims).FirstOrDefault(c => c.Type == "DepartamentoId").Value);
+
             var actividades = Repository.GetAll().Select(x=> new ActividadDTO
             {
+                Id = x.Id,
                 Titulo =x.Titulo,
                 Descripcion=x.Descripcion,
                 FechaRealizacion=x.FechaRealizacion,
                 IdDepartamento=x.IdDepartamento,
-            });
+                Estado=x.Estado,
+                FechaActualizacion=x.FechaActualizacion,
+                FechaCreacion=x.FechaCreacion
+            }).Where(x=>x.IdDepartamento >= actividadesDepartamento);
 
             return Ok(actividades);
         }
@@ -63,6 +72,8 @@ namespace APIActividadesITESRC.Controllers
         [HttpPut("Editar")]
         public IActionResult EditarActividad(ActividadDTO dto)
         {
+            var actividadesDepartamento = int.Parse(User.Identities.SelectMany(ci => ci.Claims).FirstOrDefault(c => c.Type == "DepartamentoId").Value);
+
             ActividadValidator validator = new();
             var results = validator.Validate(dto);
             if (results.IsValid)
@@ -74,14 +85,20 @@ namespace APIActividadesITESRC.Controllers
                 }
                 else
                 {
-                    entidadActividad.Titulo = dto.Titulo;
-                    entidadActividad.Descripcion = dto.Descripcion;
-                    entidadActividad.Estado = dto.Estado;
-                    entidadActividad.FechaActualizacion = DateTime.UtcNow;
-                    entidadActividad.FechaRealizacion=dto.FechaRealizacion;
-
-                    Repository.Update(entidadActividad);
-                    return Ok();
+                    if(entidadActividad.IdDepartamento == actividadesDepartamento)
+                    {
+                        entidadActividad.Titulo = dto.Titulo;
+                        entidadActividad.Descripcion = dto.Descripcion;
+                        entidadActividad.Estado = dto.Estado;
+                        entidadActividad.FechaActualizacion = DateTime.UtcNow;
+                        entidadActividad.FechaRealizacion = dto.FechaRealizacion;
+                        Repository.Update(entidadActividad);
+                        return Ok();
+                    }
+                    else
+                    {
+                        return BadRequest(results.Errors.Select(x => x.ErrorMessage));
+                    }
                 }
             }
             else

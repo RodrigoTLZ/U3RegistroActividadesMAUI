@@ -23,7 +23,7 @@ namespace APIActividadesITESRC.Repositories
 
         public Departamentos? GetByEmail(string email)
         {
-            return Context.Departamentos.Find(email);
+            return Context.Departamentos.Where(x=> x.Username == email).First();
         }
 
         public void Insert(Departamentos departamento)

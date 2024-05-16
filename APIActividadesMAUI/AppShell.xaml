@@ -7,14 +7,36 @@
     xmlns:views="clr-namespace:APIActividadesMAUI.Views"
     xmlns:viewsA="clr-namespace:APIActividadesMAUI.Views.ActividadesView"
     xmlns:viewsD="clr-namespace:APIActividadesMAUI.Views.DepartamentosView"
+    xmlns:vm="clr-namespace:APIActividadesMAUI.ViewModels"
     Shell.NavBarIsVisible="False"
     Shell.TabBarIsVisible="False"
     Shell.FlyoutBehavior="Disabled"
     Shell.FlyoutItemIsVisible="False">
 
+    <Shell.BindingContext>
+        <vm:ActividadesViewModel></vm:ActividadesViewModel>
+        <vm:DepartamentosViewModel></vm:DepartamentosViewModel>
+    </Shell.BindingContext>
+
     <ShellContent
-        
         ContentTemplate="{DataTemplate views:LoginView}"
         Route="Login" />
+
+    <ShellContent ContentTemplate="{DataTemplate views:ListadoActividadesView}"
+                  Route="ListadoActividades"/>
+
+    <ShellContent ContentTemplate="{DataTemplate viewsA:AgregarActividadView}"
+                  Route="AgregarActividad"/>
+    <ShellContent ContentTemplate="{DataTemplate viewsA:EditarActividadView}"
+                  Route="EditarActividad"/>
+    <ShellContent ContentTemplate="{DataTemplate viewsA:EliminarActividadView}"
+              Route="EliminarActividad"/>
+
+    <ShellContent ContentTemplate="{DataTemplate viewsD:AgregarDepartamentoView}"
+              Route="AgregarDepartamento"/>
+    <ShellContent ContentTemplate="{DataTemplate viewsD:EditarDepartamento}"
+          Route="EditarDepartamento"/>
+    <ShellContent ContentTemplate="{DataTemplate viewsD:EliminarDepartamento}"
+      Route="EliminarDepartamento"/>
 
 </Shell>

@@ -13,10 +13,9 @@ namespace APIActividadesITESRC.Models.Validators
             RuleFor(x => x.Descripcion).MaximumLength(250).WithMessage("Ingrese una descripción menor a 250 caracteres.");
             RuleFor(x => x.FechaRealizacion).Must(x =>
             {
-                var fechaActual = DateTime.Now.Date;
-                return x.Value.Year <= fechaActual.Year &&
-                       x.Value.Month <= fechaActual.Month &&
-                       x.Value.Day <= fechaActual.Day;
+                var fechaActual = DateOnly.FromDateTime(DateTime.Now);
+                return x <= fechaActual;
+
             }).WithMessage("La fecha de la actividad debe ser menor a la actual");
         }
     }

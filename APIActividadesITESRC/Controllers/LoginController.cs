@@ -21,28 +21,19 @@ namespace APIActividadesITESRC.Controllers
         }
 
         [HttpPost]
-        public IActionResult Login(DepartamentoDTO dto)
+        public IActionResult Login(LoginDTO dto)
         {
-            var usuarioexistente = Repository.GetByEmail(dto.Username);
+            var usuarioexistente = Repository.GetAll().FirstOrDefault(x => x.Username == dto.Username && x.Password == Encriptacion.EncriptarSHA512(dto.Password));
 
             if(usuarioexistente == null)
             {
-                return NotFound();
+                return Unauthorized();
             }
-            else
-            {
-                if(usuarioexistente.Password == Encriptacion.EncriptarSHA512(dto.Password))
-                {
                     var token = jwtHelper.GetToken(usuarioexistente.Username,
                         usuarioexistente.Nombre,
+                        usuarioexistente.Id,
                         new List<Claim> { new Claim("Id", usuarioexistente.Id.ToString()) });
-                    return Ok();
-                }
-                else
-                {
-                    return Unauthorized();
-                }
-            }
+                    return Ok(token);
         }
 
 
