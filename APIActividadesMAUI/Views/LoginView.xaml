@@ -20,7 +20,7 @@
            TextColor="#2B0B98"
            HorizontalOptions="Center"/>
 
-                <Frame BackgroundColor="#2B0B98" BorderColor="WhiteSmoke" Padding="3" 
+                <Frame BackgroundColor="White" BorderColor="WhiteSmoke" Padding="3" 
                HorizontalOptions="FillAndExpand" CornerRadius="30">
                     <!-- Campo de entrada para el nombre de usuario -->
                     <Entry Placeholder="Usuario"

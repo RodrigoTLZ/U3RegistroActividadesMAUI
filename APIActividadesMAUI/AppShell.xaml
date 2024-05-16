@@ -14,8 +14,7 @@
     Shell.FlyoutItemIsVisible="False">
 
     <Shell.BindingContext>
-        <vm:ActividadesViewModel></vm:ActividadesViewModel>
-        <vm:DepartamentosViewModel></vm:DepartamentosViewModel>
+        <vm:AppShellBindingContext></vm:AppShellBindingContext>
     </Shell.BindingContext>
 
     <ShellContent
