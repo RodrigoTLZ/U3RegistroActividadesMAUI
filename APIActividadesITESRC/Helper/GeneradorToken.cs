@@ -14,7 +14,7 @@ namespace APIActividadesITESRC.Helper
             this.configuration = configuration;
         }
 
-        public string GetToken(string username, string role, int id, List<Claim> claims)
+        public string GetToken(string username,string role, int id, List<Claim> claims)
         {
             JwtSecurityTokenHandler handler = new();
 

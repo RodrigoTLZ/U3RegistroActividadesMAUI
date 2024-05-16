@@ -8,6 +8,7 @@ using System.Security.Cryptography;
 using System.Reflection.Metadata.Ecma335;
 using System.Text;
 using APIActividadesITESRC.Helper;
+using Microsoft.AspNetCore.Authorization;
 
 namespace APIActividadesITESRC.Controllers
 {
@@ -22,6 +23,7 @@ namespace APIActividadesITESRC.Controllers
         }
 
         [HttpPost("Agregar")]
+        [Authorize(Roles = "Admin")]
         public IActionResult AgregarDepartamento(DepartamentoDTO dto)
         {
             DepartamentoValidator validator = new(Repository.Context);
@@ -47,6 +49,7 @@ namespace APIActividadesITESRC.Controllers
 
 
         [HttpGet("ObtenerDepartamentos")]
+        [Authorize(Roles = "Admin")]
         public IActionResult GetAllDepartamentos()
         {
             var departamentos = Repository.GetAll().Select(x=> new DepartamentoDTO
@@ -63,6 +66,7 @@ namespace APIActividadesITESRC.Controllers
 
 
         [HttpPut("Editar")]
+        [Authorize(Roles = "Admin")]
         public IActionResult EditarDepartemento(DepartamentoDTO dto)
         {
             DepartamentoValidator validator = new(Repository.Context);
@@ -90,6 +94,7 @@ namespace APIActividadesITESRC.Controllers
 
 
         [HttpDelete("Eliminar")]
+        [Authorize(Roles = "Admin")]
         public IActionResult EliminarDepartamento(int id)
         {
             var entidadDepartamento = Repository.GetById(id);
@@ -105,20 +110,5 @@ namespace APIActividadesITESRC.Controllers
             }
         }
 
-        //static string EncriptarSHA512(string password)
-        //{
-        //    using (SHA512 sha512 = SHA512.Create())
-        //    {
-        //        byte[] bytes = Encoding.UTF8.GetBytes(password);
-        //        byte[] hash = sha512.ComputeHash(bytes);
-
-        //        StringBuilder builder = new StringBuilder();
-        //        foreach (byte item in hash)
-        //        {
-        //            builder.Append(item.ToString("x2"));
-        //        }
-        //        return builder.ToString();
-        //    }
-        //}
     }
 }

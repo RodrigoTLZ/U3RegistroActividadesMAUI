@@ -4,6 +4,7 @@ using APIActividadesITESRC.Models.Validators;
 using APIActividadesITESRC.Repositories;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
 
 namespace APIActividadesITESRC.Controllers
@@ -68,8 +69,28 @@ namespace APIActividadesITESRC.Controllers
             return Ok(actividades);
         }
 
+        [HttpGet("ObtenerPorDepartamento")]
+        public IActionResult GetAllActividadesPorDepartamento()
+        {
+            var actividadesDepartamento = int.Parse(User.Identities.SelectMany(ci => ci.Claims).FirstOrDefault(c => c.Type == "DepartamentoId").Value);
 
-        [HttpPut("Editar")]
+            var actividades = Repository.GetAll().Select(x => new ActividadDTO
+            {
+                Id = x.Id,
+                Titulo = x.Titulo,
+                Descripcion = x.Descripcion,
+                FechaRealizacion = x.FechaRealizacion,
+                IdDepartamento = x.IdDepartamento,
+                Estado = x.Estado,
+                FechaActualizacion = x.FechaActualizacion,
+                FechaCreacion = x.FechaCreacion
+            }).Where(x => x.IdDepartamento == actividadesDepartamento);
+
+            return Ok(actividades);
+        }
+
+
+        [HttpPut("{Id}")]
         public IActionResult EditarActividad(ActividadDTO dto)
         {
             var actividadesDepartamento = int.Parse(User.Identities.SelectMany(ci => ci.Claims).FirstOrDefault(c => c.Type == "DepartamentoId").Value);
@@ -79,7 +100,7 @@ namespace APIActividadesITESRC.Controllers
             if (results.IsValid)
             {
                 var entidadActividad = Repository.GetById(dto.Id);
-                if(entidadActividad == null)
+                if(entidadActividad == null && entidadActividad.Estado == 2)
                 {
                     return NotFound();
                 }
@@ -97,7 +118,7 @@ namespace APIActividadesITESRC.Controllers
                     }
                     else
                     {
-                        return BadRequest(results.Errors.Select(x => x.ErrorMessage));
+                        return Unauthorized();
                     }
                 }
             }
@@ -109,18 +130,28 @@ namespace APIActividadesITESRC.Controllers
         }
 
 
-        [HttpDelete("Eliminar")]
+        [HttpDelete("{Id}")]
         public IActionResult EliminarActividad(int id)
         {
+            var actividadesDepartamento = int.Parse(User.Identities.SelectMany(ci => ci.Claims).FirstOrDefault(c => c.Type == "DepartamentoId").Value);
+
             var entidadActividad = Repository.GetById(id);
             if(entidadActividad == null)
             {
                 return NotFound();
             }
-            entidadActividad.Estado = 2;
-            entidadActividad.FechaActualizacion = DateTime.UtcNow;
-            Repository.Update(entidadActividad);
-            return Ok();
+            if(id == actividadesDepartamento)
+            {
+                entidadActividad.Estado = 2;
+                entidadActividad.FechaActualizacion = DateTime.UtcNow;
+                Repository.Update(entidadActividad);
+                return Ok();
+            }
+            else
+            {
+                return Unauthorized();
+            }
+            
         }
     }
 }

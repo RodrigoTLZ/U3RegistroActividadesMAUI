@@ -30,7 +30,7 @@ namespace APIActividadesITESRC.Controllers
                 return Unauthorized();
             }
                     var token = jwtHelper.GetToken(usuarioexistente.Username,
-                        usuarioexistente.Nombre,
+                        usuarioexistente.IdSuperior == null ? "Admin":"Departamento",
                         usuarioexistente.Id,
                         new List<Claim> { new Claim("Id", usuarioexistente.Id.ToString()) });
                     return Ok(token);
