@@ -8,7 +8,8 @@ namespace APIActividadesMAUI.ViewModels
 {
     public class AppShellBindingContext
     {
-        public ActividadesViewModel ActividadesViewModel { get; } = new ActividadesViewModel();
-        public DepartamentosViewModel DepartamentosViewModel { get; } = new DepartamentosViewModel();
+        public ActividadesViewModel ActividadesViewModel { get; set; } = new ActividadesViewModel();
+        public DepartamentosViewModel DepartamentosViewModel { get; set; } = new DepartamentosViewModel();
+        public LoginViewModel LoginViewModel { get; set; } = new();
     }
 }

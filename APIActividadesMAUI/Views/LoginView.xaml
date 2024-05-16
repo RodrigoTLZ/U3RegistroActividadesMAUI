@@ -32,7 +32,7 @@
                        VerticalOptions="Center"
                        HorizontalOptions="FillAndExpand"
                        Margin="10,0,10,1"    
-                       Text="{Binding Username}"/>
+                       Text="{Binding LoginViewModel.Username}"/>
                 </Frame>
 
                 <Frame BackgroundColor="White" BorderColor="#2B0B98" Padding="3" 
@@ -48,12 +48,13 @@
                        FontAttributes="Bold"
                        VerticalOptions="Center"
                        Margin="10,0,10,1"
-                       Text="{Binding Password}" />
+                       Text="{Binding LoginViewModel.Password}" />
                 </Frame>
 
                 <!-- Botón para iniciar sesión -->
                 <Button Text="Iniciar Sesión"
-            Clicked="Button_Clicked"
+            
+                        Command="{Binding LoginViewModel.LoginCommand}"
                     FontAttributes="Bold"
                     FontSize="15"/>
 

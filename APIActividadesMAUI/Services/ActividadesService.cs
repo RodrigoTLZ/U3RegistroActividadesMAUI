@@ -38,6 +38,22 @@ namespace APIActividadesMAUI.Services
             }
         }
 
+        public async Task Eliminar(int id)
+        {
+            var response = await cliente.DeleteAsync("api/actividades/" + id);
+
+            if (response.IsSuccessStatusCode)
+            {
+                await GetActividades();
+            }
+        }
+
+        public async Task Editar(ActividadDTO dto)
+        {
+            var response = await cliente.PutAsJsonAsync("api/actividades", dto);
+
+        }
+
 
         public async Task GetActividades()
         {
