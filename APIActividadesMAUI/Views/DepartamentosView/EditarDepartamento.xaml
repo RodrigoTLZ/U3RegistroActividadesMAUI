@@ -1,53 +1,80 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="APIActividadesMAUI.Views.DepartamentosView.EditarDepartamento">
-    <StackLayout >
-        <Label Text="Editar Departamento" FontSize="25" HorizontalTextAlignment="Center" TextColor="White" FontAttributes="Bold"
-           HorizontalOptions="FillAndExpand" Padding="0,10,0,10" BackgroundColor="#2B0B98" FontFamily="Verdana" />
+             x:Class="APIActividadesMAUI.Views.DepartamentosView.EditarDepartamento"
+             BackgroundColor="#2B0B98">
+    <ContentPage.Content>
+        <ScrollView>
+            <StackLayout
+        VerticalOptions="CenterAndExpand"
+        HorizontalOptions="Center"
+        Padding="30"
+        Spacing="15">
 
-        <StackLayout VerticalOptions="CenterAndExpand" Margin="10">
-            <StackLayout.Resources>
-                <Style TargetType="Entry">
-                    <Setter Property="Margin" Value="5,10,5,10"></Setter>
-                    <Setter Property="FontAttributes" Value="Bold"></Setter>
-                    <Setter Property="FontSize" Value="Medium"></Setter>
-                    <Setter Property="FontFamily" Value="Verdana"></Setter>
-                </Style>
-            </StackLayout.Resources>
-            <!-- Nombre del departamento -->
-            <Label Text="Nombre del departamento:" FontAttributes="Bold" FontSize="Medium"></Label>
-            <Entry Placeholder="Nombre del departamento" x:Name="titleEntry" FontAttributes="Bold" FontSize="Large"/>
+                <Label
+            Text="Editar Departamento"
+            FontSize="Large"
+            FontAttributes="Bold"
+            HorizontalOptions="Center"
+            TextColor="White"/>
+
+                <Frame
+            BackgroundColor="#ffffff"
+            CornerRadius="20"
+            HasShadow="True"
+            Padding="20"
+            Margin="0,20"
+            WidthRequest="300">
+
+                    <StackLayout Spacing="15">
+                        <Entry
+                    Placeholder="Nombre de Departamento"
+                    TextColor="Black"
+                    FontSize="20"
+                    FontAttributes="Bold"
+                    PlaceholderColor="Gray"
+                    BackgroundColor="Transparent"
+                    Margin="0,10"/>
+
+                        <Entry
+                    Placeholder="Usuario"
+                    TextColor="Black"
+                    FontSize="Medium"
+                    FontAttributes="Bold"
+                    PlaceholderColor="#999999"
+                    BackgroundColor="Transparent"
+                    Margin="0,10"/>
+
+                        <Entry
+                    Placeholder="Contraseña"
+                    TextColor="Black"
+                    FontSize="Medium"
+                    FontAttributes="Bold"
+                    PlaceholderColor="#999999"
+                    BackgroundColor="Transparent"
+                    Margin="0,10"/>
+
+                        <StackLayout Orientation="Horizontal" HorizontalOptions="Center">
+                            <Button Text="&#10060; Cancelar"
+
+                                BackgroundColor="#6200ee"
+                                TextColor="White"
+                                FontSize="Medium"
+                                FontAttributes="Bold"
+                                CornerRadius="20"
+                                Margin="5,20"
+                                Padding="10"/>
 
 
-            <!-- Usuario del departamento -->
-            <Label Text="Usuario:" FontAttributes="Bold" FontSize="Medium"></Label>
-            <Entry Placeholder="Usuario"
-                   x:Name="UsuarioEntry"
-                   Keyboard="Default"
-                   ReturnType="Next"
-                   TextColor="Black"
-                   FontAttributes="Bold"
-                   VerticalOptions="Center"
-                   HorizontalOptions="FillAndExpand"
-                   Margin="10,0,10,2" />
-            
-            <!--Contraseña del departamento-->
-            <Label Text="Contraseña:" FontAttributes="Bold" FontSize="Medium"></Label>
-            <Entry Placeholder="Contraseña"
-                   x:Name="ContraseñaEntry"
-                   Keyboard="Default"
-                   ReturnType="Next"
-                   TextColor="Black"
-                   FontAttributes="Bold"
-                   VerticalOptions="Center"
-                   HorizontalOptions="FillAndExpand"
-                   Margin="10,0,10,2"/>
-
-
-
-            <!-- Botón para guardar la actividad -->
-            <Button Text="&#128190; Guardar departamento" Margin="10,15,10,10"/>
-        </StackLayout>
-    </StackLayout>
+                            <Button Text="&#128190; Guardar" BackgroundColor="#6200ee" TextColor="White"
+                                FontSize="Medium"
+                                FontAttributes="Bold"
+                                CornerRadius="20"
+                                Margin="5,20"/>
+                        </StackLayout>
+                    </StackLayout>
+                </Frame>
+            </StackLayout>
+        </ScrollView>
+    </ContentPage.Content>
 </ContentPage>

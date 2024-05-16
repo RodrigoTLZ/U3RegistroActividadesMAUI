@@ -1,34 +1,45 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="APIActividadesMAUI.Views.LoginView">
-
+             x:Class="APIActividadesMAUI.Views.LoginView"
+             BackgroundColor="#2B0B98">
     <ContentPage.Content>
-        <StackLayout Padding="30" Spacing="20" VerticalOptions="Center" Margin="20">
-            <!-- Título de la página de inicio de sesión -->
-            <Label Text="Iniciar Sesión"
-                   FontSize="Large"
-                   FontAttributes="Bold"
-                   TextColor="#2B0B98"
-                   HorizontalOptions="Center" />
+        <Frame BackgroundColor="#ffffff"
+            CornerRadius="20"
+            HasShadow="True"
+            Padding="0"
+            Margin="0,20"
+            WidthRequest="300"
+           HeightRequest="400">
 
-            <Frame BackgroundColor="Transparent" BorderColor="#2B0B98" Padding="3" HorizontalOptions="FillAndExpand" CornerRadius="30">
-                <!-- Campo de entrada para el nombre de usuario -->
-                <Entry Placeholder="Usuario"
+            <StackLayout Padding="30" Spacing="20" VerticalOptions="Center" Margin="20">
+                <!-- Título de la página de inicio de sesión -->
+                <Label Text="¡Bienvenido!"
+           FontSize="Large"
+           FontAttributes="Bold"
+           TextColor="#2B0B98"
+           HorizontalOptions="Center"/>
+
+                <Frame BackgroundColor="#2B0B98" BorderColor="WhiteSmoke" Padding="3" 
+               HorizontalOptions="FillAndExpand" CornerRadius="30">
+                    <!-- Campo de entrada para el nombre de usuario -->
+                    <Entry Placeholder="Usuario"
                        x:Name="usernameEntry"
                        Keyboard="Default"
                        ReturnType="Next"
-                       TextColor="Black"
+                       TextColor="White"
                        FontAttributes="Bold"
                        VerticalOptions="Center"
                        HorizontalOptions="FillAndExpand"
-                       Margin="10,0,10,2"
-                       Text="{Binding Username}" />
-            </Frame>
+                       Margin="10,0,10,1"    
+                       Text="{Binding Username}"/>
+                </Frame>
 
-            <Frame BackgroundColor="Transparent" BorderColor="#2B0B98" Padding="3" HorizontalOptions="FillAndExpand" CornerRadius="30">
-                <!-- Campo de entrada para el nombre de usuario -->
-                <Entry Placeholder="Contraseña"
+                <Frame BackgroundColor="White" BorderColor="#2B0B98" Padding="3" 
+                   HorizontalOptions="FillAndExpand" CornerRadius="30">
+                    <!-- Campo de entrada para el nombre de usuario -->
+                    <Entry Placeholder="Contraseña"
+                       PlaceholderColor="#2B0B98"
                        x:Name="passwordEntry"
                        IsPassword="True"
                        Keyboard="Default"
@@ -36,21 +47,22 @@
                        TextColor="Black"
                        FontAttributes="Bold"
                        VerticalOptions="Center"
-                       HorizontalOptions="FillAndExpand"
-                       Margin="10,0,10,2"
+                       Margin="10,0,10,1"
                        Text="{Binding Password}" />
-            </Frame>
+                </Frame>
 
-            <!-- Botón para iniciar sesión -->
-            <Button Text="Iniciar Sesión"
-                    Clicked="Button_Clicked"/>
+                <!-- Botón para iniciar sesión -->
+                <Button Text="Iniciar Sesión"
+            Clicked="Button_Clicked"
+                    FontAttributes="Bold"
+                    FontSize="15"/>
 
-            <!-- Mensaje de error opcional -->
-            <Label x:Name="errorMessageLabel"
-                   TextColor="Red"
-                   IsVisible="False"
-                   HorizontalOptions="Center" />
-        </StackLayout>
+                <!-- Mensaje de error opcional -->
+                <Label x:Name="errorMessageLabel"
+           TextColor="Red"
+           IsVisible="False"
+           HorizontalOptions="Center" />
+            </StackLayout>
+        </Frame>
     </ContentPage.Content>
-
 </ContentPage>

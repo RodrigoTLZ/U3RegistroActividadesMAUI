@@ -6,44 +6,46 @@
         <StackLayout >
 
             <Label Text="Eliminar Actividad" FontSize="25" HorizontalTextAlignment="Center" TextColor="White" FontAttributes="Bold"
-               HorizontalOptions="FillAndExpand" Padding="0,10,0,10" BackgroundColor="#2B0B98" FontFamily="Verdana" />
+       HorizontalOptions="FillAndExpand" Padding="0,10,0,10" BackgroundColor="#2B0B98" FontFamily="Verdana" />
 
-            <StackLayout Margin="10">
-                <!-- Título de la actividad -->
-                <Label Text="Titulo:" FontAttributes="Bold" FontSize="Medium"></Label>
-                <Entry Placeholder="Título de la actividad" x:Name="titleEntry" FontAttributes="Bold" FontSize="15"/>
+            <Frame BorderColor="#2B0B98" BackgroundColor="#f2f2f2" CornerRadius="20" HasShadow="True" Padding="10" Margin="5,5">
+                <StackLayout Margin="10">
+                    <!-- Título de la actividad -->
+                    <Label Text="Titulo:" FontAttributes="Bold" FontSize="Medium"></Label>
+                    <Entry Placeholder="Título de la actividad" x:Name="titleEntry" FontAttributes="Bold" FontSize="15"/>
 
+                    <!-- Descripción de la actividad -->
+                    <Label Text="Descripción:" FontAttributes="Bold" FontSize="Small"></Label>
+                    <Editor Placeholder="Descripción de la actividad" x:Name="descriptionEditor" HeightRequest="100" />
 
-                <!-- Descripción de la actividad -->
-                <Label Text="Descripción:" FontAttributes="Bold" FontSize="Small"></Label>
-                <Editor Placeholder="Descripción de la actividad" x:Name="descriptionEditor" HeightRequest="100" />
+                    <!-- Fecha de creación de la actividad -->
+                    <Label Text="Fecha:" FontAttributes="Bold" FontSize="Small"></Label>
+                    <DatePicker Date="{Binding ActivityDate}" />
 
-                <!-- Fecha de creación de la actividad -->
-                <Label Text="Fecha:" FontAttributes="Bold" FontSize="Small"></Label>
-                <DatePicker Date="{Binding ActivityDate}" />
-
-
-                <!-- Departamento asignado -->
-                <Label Text="Departamento:" FontAttributes="Bold" FontSize="Small"></Label>
-                <Picker x:Name="departmentPicker" Title="Departamento asignado">
-                    <Picker.ItemsSource>
-                        <x:Array Type="{x:Type x:String}">
-                            <x:String>Sistemas Computacionales</x:String>
-                            <x:String>Industrial</x:String>
-                            <x:String>Vinculacion</x:String>
-                        </x:Array>
-                        <!-- Agrega más departamentos según sea necesario -->
-                    </Picker.ItemsSource>
-                </Picker>
-            </StackLayout>
-
+                    <!-- Departamento asignado -->
+                    <Label Text="Departamento:" FontAttributes="Bold" FontSize="Small"></Label>
+                    <Picker x:Name="departmentPicker" Title="Departamento asignado">
+                        <Picker.ItemsSource>
+                            <x:Array Type="{x:Type x:String}">
+                                <x:String>Sistemas Computacionales</x:String>
+                                <x:String>Industrial</x:String>
+                                <x:String>Vinculacion</x:String>
+                            </x:Array>
+                            <!-- Agrega más departamentos según sea necesario -->
+                        </Picker.ItemsSource>
+                    </Picker>
+                </StackLayout>
+            </Frame>
             <StackLayout Orientation="Horizontal" Margin="10,10,0,0">
                 <Image x:Name="selectedImage" VerticalOptions="CenterAndExpand" HorizontalOptions="CenterAndExpand"
-           MaximumWidthRequest="200" MaximumHeightRequest="200" Margin="10,0,10,0" />
+                       MaximumWidthRequest="200" MaximumHeightRequest="200" Margin="10,0,10,0" />
             </StackLayout>
 
-            <!--Eliminar actividad-->
-            <Button Text="&#128465; Eliminar actividad" Margin="10,15,10,10"/>
+            <StackLayout Orientation="Horizontal" HorizontalOptions="Center">
+                <Button Text="&#10060; Cancelar" Margin="5,10" WidthRequest="160"/>
+                <Button Text="&#128465; Eliminar actividad" Margin="5,10" WidthRequest="170"/>
+            </StackLayout>
+
         </StackLayout>
     </ScrollView>
 </ContentPage>
