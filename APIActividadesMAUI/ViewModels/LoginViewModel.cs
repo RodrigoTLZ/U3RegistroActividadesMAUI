@@ -13,6 +13,7 @@ namespace APIActividadesMAUI.ViewModels
     public partial class LoginViewModel:ObservableObject
     {
         LoginService loginService = new();
+        ActividadesService actividadesService = new();
 
         [ObservableProperty]
         public string? username;
@@ -29,7 +30,9 @@ namespace APIActividadesMAUI.ViewModels
         [RelayCommand]
         public async void Login()
         {
-            if(!string.IsNullOrWhiteSpace(username) && !string.IsNullOrWhiteSpace((password)))
+            
+
+            if (!string.IsNullOrWhiteSpace(username) && !string.IsNullOrWhiteSpace((password)))
             {
                 var tokensito = await loginService.Login(new LoginDTO
                 {
@@ -39,7 +42,9 @@ namespace APIActividadesMAUI.ViewModels
                 if(tokensito != null)
                 {
                     await SecureStorage.SetAsync("tkn", tokensito);
-                    await Shell.Current.GoToAsync("//ListaActividades");
+                    int departamentoid = loginService.GetDepartmentoId();
+                    await actividadesService.GetActividades(departamentoid);
+                    await Shell.Current.GoToAsync("//ListadoActividades");
                 }
                 else
                 {

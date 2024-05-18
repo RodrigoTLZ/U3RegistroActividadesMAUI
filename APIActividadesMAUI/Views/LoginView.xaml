@@ -27,7 +27,7 @@
                        x:Name="usernameEntry"
                        Keyboard="Default"
                        ReturnType="Next"
-                       TextColor="White"
+                       TextColor="Black"
                        FontAttributes="Bold"
                        VerticalOptions="Center"
                        HorizontalOptions="FillAndExpand"

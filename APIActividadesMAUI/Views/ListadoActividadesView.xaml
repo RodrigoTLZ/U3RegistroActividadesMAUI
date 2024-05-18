@@ -14,28 +14,19 @@
 
 
         <!-- Colección de actividades -->
-        <CollectionView Grid.Row="1" x:Name="activitiesCollectionView"
+        <CollectionView ItemsSource="{Binding ActividadesViewModel.ListadoActividades}" Grid.Row="1" x:Name="activitiesCollectionView"
      SelectionMode="Single"
      EmptyView="No hay actividades agregadas">
-            <CollectionView.ItemsSource>
-                <StackLayout Padding="10" Margin="0,5" BackgroundColor="#f2f2f2">
-                    <Label Text="Titulo" FontSize="Medium" FontAttributes="Bold" />
-                    <Label Text="Descripcion" FontSize="Small" />
-                    <Label Text="Departamento" FontSize="Small" />
-                    <Label Text="Fecha"/>
-                </StackLayout>
-            </CollectionView.ItemsSource>
             <CollectionView.ItemTemplate>
                 <DataTemplate>
                     <Frame BackgroundColor="#f2f2f2" BorderColor="#2B0B98" Padding="3" 
                    HorizontalOptions="FillAndExpand" Margin="6">
                         <StackLayout Padding="10" Margin="0,5" BackgroundColor="#f2f2f2">
-                            <Label Text="Carrera Novatos 2024" FontSize="Medium" FontAttributes="Bold" />
-                            <Label Text="Este año se llevo a cabo la carrera de novtos del TecNM Campus Region Carbonifera en la que participaron docentes y alumnos llegando a ser 500 personas las que participaron de este evento" 
+                            <Label Text="{Binding Titulo}" FontSize="Medium" FontAttributes="Bold" />
+                            <Label Text="{Binding Descripcion}" 
                            FontSize="Small" MaxLines="3" Margin="0,7,0,10" LineBreakMode="CharacterWrap" LineHeight="1.1" />
-                            <Label Text="Ing. Sistemas Computacionales" FontAttributes="Italic" FontSize="Small" />
-                            <Label Text="15 Mayo 2024" HorizontalOptions="End"/>
-                            <!--<Label Text="{Binding ActivityDate, StringFormat='Fecha de Creación: {0:d}'}" FontSize="Small" />-->
+                            <!--<Label Text="{Binding}" FontAttributes="Italic" FontSize="Small" />-->
+                            <Label Text="{Binding FechaRealizacion}" HorizontalOptions="End"/>
                         </StackLayout>
                     </Frame>
                 </DataTemplate>

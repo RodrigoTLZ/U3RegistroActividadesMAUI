@@ -49,32 +49,15 @@ namespace APIActividadesITESRC.Controllers
             }
         }
 
-        [HttpGet("Obtener")]
-        public IActionResult GetAllActividades()
+        [HttpGet("{fecha?}/{hora?}/{minutos?}/{id}")]
+        public IActionResult GetAllActividades(DateTime? fecha, int hora = 0, int minutos = 0, int id = 0)
         {
-            var actividadesDepartamento = int.Parse(User.Identities.SelectMany(ci => ci.Claims).FirstOrDefault(c => c.Type == "DepartamentoId").Value);
-
-            var actividades = Repository.GetAll().Select(x=> new ActividadDTO
+            if (fecha != null)
             {
-                Id = x.Id,
-                Titulo =x.Titulo,
-                Descripcion=x.Descripcion,
-                FechaRealizacion=x.FechaRealizacion,
-                IdDepartamento=x.IdDepartamento,
-                Estado=x.Estado,
-                FechaActualizacion=x.FechaActualizacion,
-                FechaCreacion=x.FechaCreacion
-            }).Where(x=>x.IdDepartamento >= actividadesDepartamento);
+                DateTime date = new DateTime(fecha.Value.Year, fecha.Value.Month, fecha.Value.Day, hora, minutos, 0);
+            }
 
-            return Ok(actividades);
-        }
-
-        [HttpGet("ObtenerPorDepartamento")]
-        public IActionResult GetAllActividadesPorDepartamento()
-        {
-            var actividadesDepartamento = int.Parse(User.Identities.SelectMany(ci => ci.Claims).FirstOrDefault(c => c.Type == "DepartamentoId").Value);
-
-            var actividades = Repository.GetAll().Select(x => new ActividadDTO
+            var actividades = Repository.GetAll().Where(x=> fecha == null || x.FechaActualizacion > fecha).Select(x => new ActividadDTO
             {
                 Id = x.Id,
                 Titulo = x.Titulo,
@@ -84,7 +67,7 @@ namespace APIActividadesITESRC.Controllers
                 Estado = x.Estado,
                 FechaActualizacion = x.FechaActualizacion,
                 FechaCreacion = x.FechaCreacion
-            }).Where(x => x.IdDepartamento == actividadesDepartamento);
+            }).Where(x => x.IdDepartamento == id);
 
             return Ok(actividades);
         }
@@ -93,7 +76,7 @@ namespace APIActividadesITESRC.Controllers
         [HttpPut("{Id}")]
         public IActionResult EditarActividad(ActividadDTO dto)
         {
-            var actividadesDepartamento = int.Parse(User.Identities.SelectMany(ci => ci.Claims).FirstOrDefault(c => c.Type == "DepartamentoId").Value);
+           // var actividadesDepartamento = int.Parse(User.Identities.SelectMany(ci => ci.Claims).FirstOrDefault(c => c.Type == "DepartamentoId").Value);
 
             ActividadValidator validator = new();
             var results = validator.Validate(dto);
@@ -106,8 +89,6 @@ namespace APIActividadesITESRC.Controllers
                 }
                 else
                 {
-                    if(entidadActividad.IdDepartamento == actividadesDepartamento)
-                    {
                         entidadActividad.Titulo = dto.Titulo;
                         entidadActividad.Descripcion = dto.Descripcion;
                         entidadActividad.Estado = dto.Estado;
@@ -115,11 +96,7 @@ namespace APIActividadesITESRC.Controllers
                         entidadActividad.FechaRealizacion = dto.FechaRealizacion;
                         Repository.Update(entidadActividad);
                         return Ok();
-                    }
-                    else
-                    {
-                        return Unauthorized();
-                    }
+                    
                 }
             }
             else

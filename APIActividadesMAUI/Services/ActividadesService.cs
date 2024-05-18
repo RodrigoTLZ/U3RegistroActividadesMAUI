@@ -14,6 +14,7 @@ namespace APIActividadesMAUI.Services
         HttpClient cliente;
         Repositories.RepositoryGeneric<ActividadDTO> repository = new();
         public event Action? ActualizarDatos;
+        LoginService loginService = new();
 
         public ActividadesService()
         {
@@ -26,10 +27,10 @@ namespace APIActividadesMAUI.Services
         public async Task Agregar(ActividadDTO dto)
         {
             var response = await cliente.PostAsJsonAsync("api/actividades", dto);
-
+            var departamentoId = loginService.GetDepartmentoId();
             if(response.IsSuccessStatusCode)
             {
-                await GetActividades();
+                await GetActividades(departamentoId);
             }
             else
             {
@@ -40,28 +41,47 @@ namespace APIActividadesMAUI.Services
 
         public async Task Eliminar(int id)
         {
-            var response = await cliente.DeleteAsync("api/actividades/" + id);
+            var response = await cliente.DeleteAsync("api/Actividades/" + id);
+            var departamentoId = loginService.GetDepartmentoId();
 
             if (response.IsSuccessStatusCode)
             {
-                await GetActividades();
+                await GetActividades(departamentoId);
             }
         }
 
         public async Task Editar(ActividadDTO dto)
         {
-            var response = await cliente.PutAsJsonAsync("api/actividades", dto);
+            // Espera a que se complete la tarea y obtiene el valor de departamentoid
+            var departamentoId = loginService.GetDepartmentoId();
 
+
+            // Verifica si departamentoid no es nulo antes de continuar
+            if (departamentoId != 0)
+            {
+                var response = await cliente.PutAsJsonAsync($"api/ActividadesAPI/{dto.Id}", dto);
+                if (response.IsSuccessStatusCode)
+                {
+                    // Llama a GetActividades con el valor de departamentoid
+                    await GetActividades(departamentoId);
+                }
+            }
+            else
+            {
+                // Maneja el caso en que departamentoid es nulo
+                // Por ejemplo, lanza una excepción o muestra un mensaje de error
+                throw new InvalidOperationException("No se pudo obtener el departamento ID.");
+            }
         }
 
 
-        public async Task GetActividades()
+        public async Task GetActividades(int id)
         {
             try
             {
-                var fecha = Preferences.Get("UltimaFechaActualizacion", DateTime.MinValue);
+               var fecha = Preferences.Get("UltimaFechaActualizacion", DateTime.MinValue);
                 bool aviso = false;
-                var response = await cliente.GetFromJsonAsync<List<ActividadDTO>>($"api/actividades/{fecha:yyyy-MM-dd}/{fecha:HH}/{fecha:mm}");
+                var response = await cliente.GetFromJsonAsync<List<ActividadDTO>>($"api/libros/{fecha:yyyy-MM-dd}/{fecha:HH}/{fecha:mm}/{id}");
 
                 if (response != null)
                 {

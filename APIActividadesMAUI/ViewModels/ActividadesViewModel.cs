@@ -18,7 +18,10 @@ namespace APIActividadesMAUI.ViewModels
         Repositories.RepositoryGeneric<Actividad> repositoryActividades = new();
         public ObservableCollection<Actividad> ListadoActividades { get; set; } = new();
         ActividadesService service = new();
+        LoginService loginService = new();
         ActividadValidator validador = new();
+
+        public Actividad ActividadSeleccionada { get; set; }
 
         public ActividadesViewModel()
         {
@@ -36,6 +39,18 @@ namespace APIActividadesMAUI.ViewModels
 
         [ObservableProperty]
         private string error = "";
+
+
+        [RelayCommand]
+        public void VerEditarActividad(int id)
+        {
+            ActividadSeleccionada = repositoryActividades.Get(id);
+            if(ActividadSeleccionada != null)
+            {
+                Error = "";
+                Shell.Current.GoToAsync("//EditarActividad");
+            }
+        }
 
         [RelayCommand]
         public void Nuevo()
@@ -74,6 +89,45 @@ namespace APIActividadesMAUI.ViewModels
             catch (Exception ex)
             {
                 Error = ex.Message;
+            }
+        }
+
+        [RelayCommand]
+        public async Task Editar()
+        {
+            try
+            {
+                if (ActividadSeleccionada != null)
+                {
+                    ActividadEditarValidator validator = new();
+                    var actividadvalidada = validator.Validate(ActividadSeleccionada);
+                    if (actividadvalidada.IsValid)
+                    {
+                        var departamento = loginService.ObtenerIdDepartamento();
+                        var actividad = new ActividadDTO()
+                        {
+                            Titulo = ActividadSeleccionada.Titulo,
+                            Descripcion = ActividadSeleccionada.Descripcion,
+                            FechaRealizacion = ActividadSeleccionada.FechaRealizacion,
+                            Estado = ActividadSeleccionada.Estado,
+                            FechaActualizacion = ActividadSeleccionada.FechaActualizacion,
+                            FechaCreacion = ActividadSeleccionada.FechaCreacion,
+                            Id = ActividadSeleccionada.Id,
+                            IdDepartamento = ActividadSeleccionada.IdDepartamento
+                        };
+                        await service.Editar(actividad);
+                        Cancelar();
+                    }
+                    else
+                    {
+                        Error = string.Join("\n", actividadvalidada.Errors.Select(x => x.ErrorMessage));
+                    }
+                }
+            }
+            catch (Exception)
+            {
+
+                throw;
             }
         }
 

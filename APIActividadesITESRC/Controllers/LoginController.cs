@@ -1,5 +1,6 @@
 ﻿using APIActividadesITESRC.Helper;
 using APIActividadesITESRC.Models.DTOs;
+using APIActividadesITESRC.Models.Entities;
 using APIActividadesITESRC.Repositories;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -13,6 +14,7 @@ namespace APIActividadesITESRC.Controllers
     {
         public DepartamentosRepository Repository { get; }
         public GeneradorToken jwtHelper;
+        public Departamentos usuario;
 
         public LoginController(DepartamentosRepository repository, GeneradorToken jwtHelper)
         {
@@ -23,19 +25,35 @@ namespace APIActividadesITESRC.Controllers
         [HttpPost]
         public IActionResult Login(LoginDTO dto)
         {
-            var usuarioexistente = Repository.GetAll().FirstOrDefault(x => x.Username == dto.Username && x.Password == Encriptacion.EncriptarSHA512(dto.Password));
+            usuario = Repository.GetAll().FirstOrDefault(x => x.Username == dto.Username && x.Password == Encriptacion.EncriptarSHA512(dto.Password));
 
-            if(usuarioexistente == null)
+            if(usuario == null)
             {
                 return Unauthorized();
             }
-                    var token = jwtHelper.GetToken(usuarioexistente.Username,
-                        usuarioexistente.IdSuperior == null ? "Admin":"Departamento",
-                        usuarioexistente.Id,
-                        new List<Claim> { new Claim("Id", usuarioexistente.Id.ToString()) });
+                    var token = jwtHelper.GetToken(usuario.Username,
+                        usuario.IdSuperior == null ? "Admin":"Departamento",
+                        usuario.Id,
+                        new List<Claim> { new Claim("Id", usuario.Id.ToString()) });
+
                     return Ok(token);
         }
 
+
+        [HttpGet("GetDepartamentoId")]
+        public IActionResult GetDepartamentoId()
+        {
+
+            if(usuario != null)
+            {
+                return Ok(usuario.Id);
+            }
+            else
+            {
+                return BadRequest();
+            }
+
+        }
 
     }
 }
