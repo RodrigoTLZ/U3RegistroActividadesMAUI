@@ -1,4 +1,5 @@
 ﻿using APIActividadesMAUI.Models.DTOs;
+using APIActividadesMAUI.Models.Entities;
 using APIActividadesMAUI.Repositories;
 using System;
 using System.Collections.Generic;
@@ -12,10 +13,9 @@ namespace APIActividadesMAUI.Services
     public class ActividadesService
     {
         HttpClient cliente;
-        Repositories.RepositoryGeneric<ActividadDTO> repository = new();
+        Repositories.RepositoryGeneric<Actividad> repository = new();
         public event Action? ActualizarDatos;
-        LoginService loginService = new();
-
+        LoginService loginService = App.LoginService;
         public ActividadesService()
         {
             cliente = new()
@@ -79,9 +79,9 @@ namespace APIActividadesMAUI.Services
         {
             try
             {
-               var fecha = Preferences.Get("UltimaFechaActualizacion", DateTime.MinValue);
+               var fecha = Preferences.Get($"UltimaFechaModificacionDepartamento{id}", DateTime.MinValue);
                 bool aviso = false;
-                var response = await cliente.GetFromJsonAsync<List<ActividadDTO>>($"api/libros/{fecha:yyyy-MM-dd}/{fecha:HH}/{fecha:mm}/{id}");
+                var response = await cliente.GetFromJsonAsync<List<ActividadDTO>>($"api/ActividadesAPI/{fecha:yyyy-MM-dd}/{fecha:HH}/{fecha:mm}/{id}");
 
                 if (response != null)
                 {
@@ -94,9 +94,9 @@ namespace APIActividadesMAUI.Services
                             entidad = new()
                             {
                                 Id = actividad.Id,
-                                Descripcion = actividad.Descripcion,
+                                Descripcion = actividad.Descripcion??"",
                                 Estado = actividad.Estado,
-                                FechaRealizacion = actividad.FechaRealizacion,
+                                FechaRealizacion = actividad.FechaRealizacion ?? DateTime.Now,
                                 FechaActualizacion = actividad.FechaActualizacion,
                                 FechaCreacion = actividad.FechaCreacion,
                                 IdDepartamento = actividad.IdDepartamento,
@@ -136,8 +136,8 @@ namespace APIActividadesMAUI.Services
                         {
                             ActualizarDatos?.Invoke();
                         });
+                        Preferences.Set($"UltimaFechaModificacionDepartamento{id}", response.Max(x => (x.FechaCreacion > x.FechaActualizacion) ? x.FechaCreacion : x.FechaActualizacion));
                     }
-                    Preferences.Set("UltimaFechaActualizacion", response.Max(x => x.FechaCreacion));
                 }
             }
             catch (Exception)

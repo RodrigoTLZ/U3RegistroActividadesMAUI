@@ -1,26 +1,44 @@
 ﻿using APIActividadesMAUI.Services;
+using APIActividadesMAUI.Views;
 
 namespace APIActividadesMAUI
 {
     public partial class App : Application
     {
-        public static ActividadesService ActividadService { get; set; } = new();   
+        public static LoginService LoginService { get; private set; }
+        public static ActividadesService ActividadService { get; private set; }
         public App()
         {
             InitializeComponent();
+            LoginService = new LoginService();
+            ActividadService = new ActividadesService();
+            LoginService.LoginExitoso += LoginService_LoginExitoso;
+            MainPage = new AppShell();
+        }
 
+        private void LoginService_LoginExitoso()
+        {
             Thread thread = new Thread(Sincronizador) { IsBackground = true };
             thread.Start();
-            MainPage = new AppShell();
+            MainThread.BeginInvokeOnMainThread(() =>
+            {
+                MainPage = new NavigationPage(new ListadoActividadesView());
+            });
         }
 
         async void Sincronizador()
         {
-            while (true)
+            int departamentoid = LoginService.GetDepartmentoId();
+
+            if(departamentoid != 0)
             {
-                await ActividadService.GetActividades();
-                Thread.Sleep(TimeSpan.FromSeconds(15));
+                while (true)
+                {
+                    await ActividadService.GetActividades(departamentoid);
+                    Thread.Sleep(TimeSpan.FromSeconds(15));
+                }
             }
+            
         }
     }
 }

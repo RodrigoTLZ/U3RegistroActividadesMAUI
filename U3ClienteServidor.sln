@@ -3,9 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.8.34525.116
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MAUIActividadesITESRC", "APIActividadesMAUI\MAUIActividadesITESRC.csproj", "{14E5C28B-642A-40AD-B4EC-5B2D3BAFE654}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MAUIActividadesITESRC", "APIActividadesMAUI\MAUIActividadesITESRC.csproj", "{14E5C28B-642A-40AD-B4EC-5B2D3BAFE654}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "APIActividadesITESRC", "APIActividadesITESRC\APIActividadesITESRC.csproj", "{20D21866-EC7A-4C77-B8F2-3C0FD95A341D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "APIActividadesITESRC", "APIActividadesITESRC\APIActividadesITESRC.csproj", "{20D21866-EC7A-4C77-B8F2-3C0FD95A341D}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

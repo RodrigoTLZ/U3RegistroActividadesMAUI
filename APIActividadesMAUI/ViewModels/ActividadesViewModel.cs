@@ -17,22 +17,27 @@ namespace APIActividadesMAUI.ViewModels
     {
         Repositories.RepositoryGeneric<Actividad> repositoryActividades = new();
         public ObservableCollection<Actividad> ListadoActividades { get; set; } = new();
-        ActividadesService service = new();
-        LoginService loginService = new();
+        ActividadesService service = App.ActividadService;
+        LoginService loginService = App.LoginService;
         ActividadValidator validador = new();
 
         public Actividad ActividadSeleccionada { get; set; }
 
         public ActividadesViewModel()
-        {
-            ActualizarActividades();
-            App.ActividadService.ActualizarDatos += ActividadService_ActualizarDatos;
+        { 
+          // App.ActividadService.ActualizarDatos += ActividadService_ActualizarDatos;
+            service.ActualizarDatos += Service_ActualizarDatos;
         }
 
-        private void ActividadService_ActualizarDatos()
+        private void Service_ActualizarDatos()
         {
             ActualizarActividades();
         }
+
+        //private void ActividadService_ActualizarDatos()
+        //{
+        //    ActualizarActividades();
+        //}
 
         [ObservableProperty]
         private ActividadDTO? actividad;
@@ -103,7 +108,7 @@ namespace APIActividadesMAUI.ViewModels
                     var actividadvalidada = validator.Validate(ActividadSeleccionada);
                     if (actividadvalidada.IsValid)
                     {
-                        var departamento = loginService.ObtenerIdDepartamento();
+                        var departamento = loginService.GetDepartmentoId();
                         var actividad = new ActividadDTO()
                         {
                             Titulo = ActividadSeleccionada.Titulo,

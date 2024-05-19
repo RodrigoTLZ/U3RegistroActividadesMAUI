@@ -13,6 +13,8 @@ namespace APIActividadesMAUI.Services
 {
     public class LoginService
     {
+        public event Action? LoginExitoso;
+
         HttpClient cliente = new()
         {
             BaseAddress = new Uri("https://actividadesteam7.websitos256.com/")
@@ -24,6 +26,7 @@ namespace APIActividadesMAUI.Services
             var response = await cliente.PostAsync($"api/login", dato);
             if (response.IsSuccessStatusCode)
             {
+                LoginExitoso?.Invoke();
                 return response.Content.ReadAsStringAsync().Result;
             }
             else
@@ -33,7 +36,8 @@ namespace APIActividadesMAUI.Services
         }
         public string GetToken()
         {
-            return SecureStorage.GetAsync("tkn").ToString();
+            string token = SecureStorage.GetAsync("tkn").Result;
+            return token;
         }
 
 
