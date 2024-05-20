@@ -109,14 +109,12 @@ namespace APIActividadesITESRC.Controllers
         [HttpDelete("{Id}")]
         public IActionResult EliminarActividad(int id)
         {
-            var actividadesDepartamento = int.Parse(User.Identities.SelectMany(ci => ci.Claims).FirstOrDefault(c => c.Type == "DepartamentoId").Value);
-
             var entidadActividad = Repository.GetById(id);
             if(entidadActividad == null)
             {
                 return NotFound();
             }
-            if(id == actividadesDepartamento)
+            if(entidadActividad.Id == id)
             {
                 entidadActividad.Estado = 2;
                 entidadActividad.FechaActualizacion = DateTime.UtcNow;

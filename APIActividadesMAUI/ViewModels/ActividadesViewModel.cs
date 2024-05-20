@@ -60,6 +60,16 @@ namespace APIActividadesMAUI.ViewModels
         }
 
         [RelayCommand]
+        public void VerEliminarActividad(int id)
+        {
+            ActividadSeleccionada = repositoryActividades.Get(id);
+            if (ActividadSeleccionada != null)
+            {
+                Shell.Current.GoToAsync("//EliminarActividad");
+            }
+        }
+
+        [RelayCommand]
         public void Nuevo()
         {
             Actividad = new();
@@ -103,6 +113,24 @@ namespace APIActividadesMAUI.ViewModels
         }
 
         [RelayCommand]
+        public async Task Eliminar()
+        {
+            try
+            {
+                if(ActividadSeleccionada != null)
+                {
+                    await service.Eliminar(ActividadSeleccionada.Id);
+                    ActividadSeleccionada = null;
+                    Cancelar();
+                }
+            }
+            catch (Exception)
+            {
+
+            }
+        }
+
+        [RelayCommand]
         public async Task Editar()
         {
             try
@@ -113,7 +141,6 @@ namespace APIActividadesMAUI.ViewModels
                     var actividadvalidada = validator.Validate(ActividadSeleccionada);
                     if (actividadvalidada.IsValid)
                     {
-                        var departamento = loginService.GetDepartmentoId();
                         var actividad = new ActividadDTO()
                         {
                             Titulo = ActividadSeleccionada.Titulo,

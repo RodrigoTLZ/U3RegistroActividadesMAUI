@@ -25,8 +25,10 @@
                                 <Label Text="{Binding Descripcion}" FontSize="13" MaxLines="3" Margin="0,7,0,10" LineBreakMode="CharacterWrap" LineHeight="1.1" />
                                 <Label Text="{Binding FechaRealizacion, StringFormat='{0:dd/MM/yyyy}'}"/>
                                 <StackLayout Orientation="Horizontal" HorizontalOptions="EndAndExpand">
-                                    <Button Text="Editar" Command="{Binding Source={RelativeSource AncestorType={x:Type ContentPage}}, Path=BindingContext.VerEditarActividadCommand}" CommandParameter="{Binding .}" />
-                                    <Button Text="Eliminar" Command="{Binding Source={RelativeSource AncestorType={x:Type ContentPage}}, Path=BindingContext.EliminarCommand}" CommandParameter="{Binding .}" />
+                                    <Button Text="Editar" Command="{Binding Source={x:Reference Name=activitiesCollectionView}, Path=BindingContext.ActividadesViewModel.VerEditarActividadCommand}"
+                                        CommandParameter="{Binding Id}" />
+                                    <Button Text="Eliminar" Command="{Binding Source={x:Reference Name=activitiesCollectionView}, Path=BindingContext.ActividadesViewModel.VerEliminarActividadCommand}"
+                                        CommandParameter="{Binding Id}" />
                                 </StackLayout>
                             </StackLayout>
                         </Frame>

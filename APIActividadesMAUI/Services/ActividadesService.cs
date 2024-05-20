@@ -41,7 +41,7 @@ namespace APIActividadesMAUI.Services
 
         public async Task Eliminar(int id)
         {
-            var response = await cliente.DeleteAsync("api/Actividades/" + id);
+            var response = await cliente.DeleteAsync($"api/ActividadesAPI/{id}");
             var departamentoId = await loginService.GetDepartmentoId();
 
             if (response.IsSuccessStatusCode)
@@ -79,7 +79,7 @@ namespace APIActividadesMAUI.Services
         {
             try
             {
-               var fecha = Preferences.Get($"UltimaFechaModificacionDepartamento{id}", DateTime.MinValue);
+               var fecha = Preferences.Get($"FechaModificacionDepartamento{id}", DateTime.MinValue);
                 bool aviso = false;
                 var response = await cliente.GetFromJsonAsync<List<ActividadDTO>>($"api/ActividadesAPI/{fecha:yyyy-MM-dd}/{fecha:HH}/{fecha:mm}/{id}");
 
@@ -136,7 +136,7 @@ namespace APIActividadesMAUI.Services
                         {
                             ActualizarDatos?.Invoke();
                         });
-                        Preferences.Set($"UltimaFechaModificacionDepartamento{id}", response.Max(x => (x.FechaCreacion > x.FechaActualizacion)?x.FechaCreacion:x.FechaActualizacion));
+                        Preferences.Set($"FechaModificacionDepartamento{id}", DateTime.Now);
 
                     }
                 }
