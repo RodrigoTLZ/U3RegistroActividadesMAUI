@@ -30,6 +30,7 @@
                 <Image x:Name="selectedImage" VerticalOptions="CenterAndExpand" HorizontalOptions="CenterAndExpand"
                        MaximumWidthRequest="200" MaximumHeightRequest="200" Margin="10,0,10,0" />
             </StackLayout>
+            <Label Text="{Binding ActividadesViewModel.Error}" TextColor="Red" FontAttributes="Bold" FontSize="Small"></Label>
 
             <StackLayout Orientation="Horizontal" HorizontalOptions="Center">
                 <Button Text="&#10060; Cancelar" Command="{Binding ActividadesViewModel.CancelarCommand}" Margin="5,10" WidthRequest="160"/>

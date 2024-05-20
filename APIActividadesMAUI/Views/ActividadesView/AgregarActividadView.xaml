@@ -32,7 +32,7 @@
             </StackLayout>
 
 
-            <Label Text="{Binding ActividadesViewModel.Error}" TextColor="Red" FontAttributes="Bold" FontSize="Small"></Label>
+            <Label Text="{Binding ActividadesViewModel.Error}" TextColor="Red" FontSize="15" Margin="5"></Label>
             <!-- Botón para guardar la actividad -->
             
             <StackLayout Orientation="Horizontal" HorizontalOptions="Center">

@@ -13,7 +13,7 @@ namespace APIActividadesMAUI.Models.Validators
         public DepartamentoValidator()
         {
             RuleFor(x => x.Nombre).NotEmpty().WithMessage("El nombre del departamento no debe estar vacío.");
-           // RuleFor(x => x.Nombre).Must(Comparar).WithMessage("Ya se encuentra registrado un departamento con ese nombre.");
+            //RuleFor(x => x.Nombre).Must(Comparar).WithMessage("Ya se encuentra registrado un departamento con ese nombre.");
 
             RuleFor(x => x.Username).NotEmpty().WithMessage("Ingrese el nombre de usuario.");
             RuleFor(x => x.Username).EmailAddress().WithMessage("Ingrese un correo válido.");

@@ -18,7 +18,7 @@ namespace APIActividadesMAUI.Models.Entities
 
         public string Descripcion { get; set; } = null!;
 
-        public DateTime FechaRealizacion { get; set; }
+        public DateTime? FechaRealizacion { get; set; }
 
         [NotNull]
         public int IdDepartamento { get; set; }

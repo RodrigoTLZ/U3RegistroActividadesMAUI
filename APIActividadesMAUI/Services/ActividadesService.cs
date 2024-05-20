@@ -52,24 +52,18 @@ namespace APIActividadesMAUI.Services
 
         public async Task Editar(ActividadDTO dto)
         {
-            // Espera a que se complete la tarea y obtiene el valor de departamentoid
             var departamentoId = await loginService.GetDepartmentoId();
 
-
-            // Verifica si departamentoid no es nulo antes de continuar
             if (departamentoId != 0)
             {
                 var response = await cliente.PutAsJsonAsync($"api/ActividadesAPI/{dto.Id}", dto);
                 if (response.IsSuccessStatusCode)
                 {
-                    // Llama a GetActividades con el valor de departamentoid
                     await GetActividades(departamentoId);
                 }
             }
             else
             {
-                // Maneja el caso en que departamentoid es nulo
-                // Por ejemplo, lanza una excepción o muestra un mensaje de error
                 throw new InvalidOperationException("No se pudo obtener el departamento ID.");
             }
         }

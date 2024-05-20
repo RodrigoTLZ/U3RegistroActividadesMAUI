@@ -9,18 +9,18 @@
             HasShadow="True"
             Padding="0"
             Margin="0,20"
-            WidthRequest="300"
-           HeightRequest="400">
+            WidthRequest="400"
+           HeightRequest="450">
 
-            <StackLayout Padding="30" Spacing="20" VerticalOptions="Center" Margin="20">
+            <StackLayout Padding="10" Spacing="25" VerticalOptions="Center" Margin="20,10,20,20">
                 <!-- Título de la página de inicio de sesión -->
                 <Label Text="¡Bienvenido!"
-           FontSize="Large"
+           FontSize="45"
            FontAttributes="Bold"
            TextColor="#2B0B98"
            HorizontalOptions="Center"/>
 
-                <Frame BackgroundColor="White" BorderColor="WhiteSmoke" Padding="3" 
+                <Frame BackgroundColor="White" BorderColor="WhiteSmoke" Padding="5" 
                HorizontalOptions="FillAndExpand" CornerRadius="30">
                     <!-- Campo de entrada para el nombre de usuario -->
                     <Entry Placeholder="Usuario"
@@ -35,11 +35,10 @@
                        Text="{Binding LoginViewModel.Username}"/>
                 </Frame>
 
-                <Frame BackgroundColor="White" BorderColor="#2B0B98" Padding="3" 
+                <Frame BackgroundColor="White" BorderColor="WhiteSmoke" Padding="3" 
                    HorizontalOptions="FillAndExpand" CornerRadius="30">
                     <!-- Campo de entrada para el nombre de usuario -->
                     <Entry Placeholder="Contraseña"
-                       PlaceholderColor="#2B0B98"
                        x:Name="passwordEntry"
                        IsPassword="True"
                        Keyboard="Default"
@@ -52,14 +51,14 @@
                 </Frame>
 
                 <!-- Botón para iniciar sesión -->
-                <Button Text="Iniciar sesión"
+                <Button Text="Iniciar sesión" Margin="0,30,0,0"
             
                         Command="{Binding LoginViewModel.LoginCommand}"
                     FontAttributes="Bold"
                     FontSize="15"/>
 
                 <!-- Mensaje de error opcional -->
-                <Label x:Name="errorMessageLabel"
+                <Label Text="{Binding LoginViewModel.Errores}"
            TextColor="Red"
            IsVisible="False"
            HorizontalOptions="Center" />

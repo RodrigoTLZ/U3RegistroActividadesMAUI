@@ -65,7 +65,7 @@ namespace APIActividadesITESRC.Controllers
         }
 
 
-        [HttpPut("Editar")]
+        [HttpPut("{id}")]
         [Authorize(Roles = "Admin")]
         public IActionResult EditarDepartemento(DepartamentoDTO dto)
         {
@@ -81,7 +81,7 @@ namespace APIActividadesITESRC.Controllers
                    departamento.IdSuperior = dto.IdSuperior;
 
                     Repository.Update(departamento);
-                    return Ok("Los cambios se han realizado correctamente");
+                    return Ok();
                 }
                 else
                 {
@@ -93,7 +93,7 @@ namespace APIActividadesITESRC.Controllers
         }
 
 
-        [HttpDelete("Eliminar")]
+        [HttpDelete("{id}")]
         [Authorize(Roles = "Admin")]
         public IActionResult EliminarDepartamento(int id)
         {

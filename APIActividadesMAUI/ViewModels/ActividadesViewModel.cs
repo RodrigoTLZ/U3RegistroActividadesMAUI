@@ -124,9 +124,9 @@ namespace APIActividadesMAUI.ViewModels
                     Cancelar();
                 }
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-
+                Error = ex.Message;
             }
         }
 
@@ -161,10 +161,9 @@ namespace APIActividadesMAUI.ViewModels
                     }
                 }
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-
-                throw;
+                Error = ex.Message;
             }
         }
 

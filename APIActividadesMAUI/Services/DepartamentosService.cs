@@ -14,9 +14,8 @@ namespace APIActividadesMAUI.Services
     {
         HttpClient cliente;
         Repositories.RepositoryGeneric<Departamento> repository = new();
-
-
         public event Action? ActualizarDatos;
+        LoginService loginService = new();
 
         
         public DepartamentosService()
@@ -30,7 +29,7 @@ namespace APIActividadesMAUI.Services
 
         public async Task Agregar(DepartamentoDTO dto)
         {
-            var response = await cliente.PostAsJsonAsync("api/departamentos", dto);
+            var response = await cliente.PostAsJsonAsync("api/DepartamentosAPI/Agregar", dto);
 
             if (response.IsSuccessStatusCode)
             {
@@ -44,13 +43,15 @@ namespace APIActividadesMAUI.Services
         }
 
 
-        public async Task EliminarDepartamento(DepartamentoDTO depa)
+        public async Task EliminarDepartamento(int id)
         {
             try
             {
-                if(depa != null)
+                var response = await cliente.DeleteAsync($"api/DepartamentosAPI/Eliminar/{id}");
+
+                if(response.IsSuccessStatusCode)
                 {
-                    var departamento = repository.Get(depa.Id);
+                    var departamento = repository.Get(id);
                     repository.Delete(departamento);
                 }
             }

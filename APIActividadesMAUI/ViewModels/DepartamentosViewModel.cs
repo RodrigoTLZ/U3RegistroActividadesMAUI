@@ -20,6 +20,9 @@ namespace APIActividadesMAUI.ViewModels
         public ObservableCollection<Departamento> ListadoDepartamentos = new();
 
         DepartamentosService service = new();
+        DepartamentoValidator validador = new();
+
+        public Departamento DepartamentoSeleccionado { get; set; }
 
         public DepartamentosViewModel()
         {
@@ -40,22 +43,25 @@ namespace APIActividadesMAUI.ViewModels
             Shell.Current.GoToAsync("//AgregarDepartamento");
         }
 
-        public void Borrar(int id)
+        [RelayCommand]
+        public void VerEliminarDepartamento(int id)
         {
-            var departamento = depaRepository.Get(id);
-            if(departamento != null)
+
+            DepartamentoSeleccionado = depaRepository.Get(id);
+            if(DepartamentoSeleccionado != null)
             {
-                Departamento = departamento;
                 Shell.Current.GoToAsync("//EliminarDepartamento");
             }
         }
 
-        public void Modificar(int id)
+
+        [RelayCommand]
+        public void VerEditarDepartamento(int id)
         {
-            var departamento = depaRepository.Get(id);
-            if (departamento != null)
+            DepartamentoSeleccionado = depaRepository.Get(id);
+            if (DepartamentoSeleccionado != null)
             {
-                Departamento = departamento;
+                Error = "";
                 Shell.Current.GoToAsync("//EditarDepartamento");
             }
         }
@@ -66,7 +72,23 @@ namespace APIActividadesMAUI.ViewModels
         {
             try
             {
-
+                if(DepartamentoSeleccionado != null)
+                {
+                    DepartamentoValidator validator = new();
+                    var departamentovalidado = validator.Validate(DepartamentoSeleccionado);
+                    if(departamentovalidado.IsValid)
+                    {
+                        var depa = new DepartamentoDTO()
+                        {
+                            Id = DepartamentoSeleccionado.Id,
+                            IdSuperior = DepartamentoSeleccionado.IdSuperior,
+                            Nombre = DepartamentoSeleccionado.Nombre,
+                            Password = DepartamentoSeleccionado.Password,
+                            Username = DepartamentoSeleccionado.Username
+                        };
+                        
+                    }
+                }
             }
             catch (Exception)
             {

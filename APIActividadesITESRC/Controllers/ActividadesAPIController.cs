@@ -114,16 +114,12 @@ namespace APIActividadesITESRC.Controllers
             {
                 return NotFound();
             }
-            if(entidadActividad.Id == id)
+            else
             {
                 entidadActividad.Estado = 2;
                 entidadActividad.FechaActualizacion = DateTime.UtcNow;
                 Repository.Update(entidadActividad);
                 return Ok();
-            }
-            else
-            {
-                return Unauthorized();
             }
             
         }
