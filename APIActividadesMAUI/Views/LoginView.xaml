@@ -52,7 +52,7 @@
                 </Frame>
 
                 <!-- Botón para iniciar sesión -->
-                <Button Text="Iniciar Sesión"
+                <Button Text="Iniciar sesión"
             
                         Command="{Binding LoginViewModel.LoginCommand}"
                     FontAttributes="Bold"

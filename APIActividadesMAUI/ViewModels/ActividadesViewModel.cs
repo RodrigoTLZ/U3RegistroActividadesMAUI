@@ -17,15 +17,16 @@ namespace APIActividadesMAUI.ViewModels
     {
         Repositories.RepositoryGeneric<Actividad> repositoryActividades = new();
         public ObservableCollection<Actividad> ListadoActividades { get; set; } = new();
-        ActividadesService service = App.ActividadService;
-        LoginService loginService = App.LoginService;
+        ActividadesService service { get; set; } = new();
+        LoginService loginService { get; set; } = new();
         ActividadValidator validador = new();
 
         public Actividad ActividadSeleccionada { get; set; }
 
         public ActividadesViewModel()
-        { 
-          // App.ActividadService.ActualizarDatos += ActividadService_ActualizarDatos;
+        {
+            ActualizarActividades();
+            loginService.LoginExitoso += LoginService_LoginExitoso;
             service.ActualizarDatos += Service_ActualizarDatos;
         }
 
@@ -34,16 +35,17 @@ namespace APIActividadesMAUI.ViewModels
             ActualizarActividades();
         }
 
-        //private void ActividadService_ActualizarDatos()
-        //{
-        //    ActualizarActividades();
-        //}
+        private void LoginService_LoginExitoso()
+        {
+            Thread thread = new Thread(Sincronizador) { IsBackground = true };
+            thread.Start();
+        }
 
         [ObservableProperty]
-        private ActividadDTO? actividad;
+        public ActividadDTO? actividad;
 
         [ObservableProperty]
-        private string error = "";
+        public string error = "";
 
 
         [RelayCommand]
@@ -72,15 +74,18 @@ namespace APIActividadesMAUI.ViewModels
             Shell.Current.GoToAsync("//ListadoActividades");
         }
 
+        [RelayCommand]
         public async Task Agregar()
         {
             try
             {
+                actividad.IdDepartamento = await loginService.GetDepartmentoId();
                 if(Actividad != null)
                 {
                     var resultado = validador.Validate(actividad);
                     if (resultado.IsValid)
                     {
+                        actividad.FechaRealizacion = actividad.FechaRealizacion;
                         await service.Agregar(actividad);
                         ActualizarActividades();
                         Cancelar();
@@ -136,11 +141,26 @@ namespace APIActividadesMAUI.ViewModels
             }
         }
 
+        async void Sincronizador()
+        {
+            int departamentoid = await loginService.GetDepartmentoId();
+
+            if (departamentoid != 0)
+            {
+                while (true)
+                {
+                    await service.GetActividades(departamentoid);
+                    await Task.Delay(TimeSpan.FromSeconds(15));
+                }
+            }
+
+        }
+
 
         void ActualizarActividades()
         {
             ListadoActividades.Clear();
-            foreach (var item in repositoryActividades.GetAll())
+            foreach (var item in repositoryActividades.GetAll().OrderBy(x=>x.FechaCreacion))
             {
                 ListadoActividades.Add(item);
             }

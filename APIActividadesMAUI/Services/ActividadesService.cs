@@ -15,7 +15,7 @@ namespace APIActividadesMAUI.Services
         HttpClient cliente;
         Repositories.RepositoryGeneric<Actividad> repository = new();
         public event Action? ActualizarDatos;
-        LoginService loginService = App.LoginService;
+        LoginService loginService = new();
         public ActividadesService()
         {
             cliente = new()
@@ -26,8 +26,8 @@ namespace APIActividadesMAUI.Services
 
         public async Task Agregar(ActividadDTO dto)
         {
-            var response = await cliente.PostAsJsonAsync("api/actividades", dto);
-            var departamentoId = loginService.GetDepartmentoId();
+            var response = await cliente.PostAsJsonAsync("api/ActividadesAPI/Publicar", dto);
+            var departamentoId = await loginService.GetDepartmentoId();
             if(response.IsSuccessStatusCode)
             {
                 await GetActividades(departamentoId);
@@ -42,7 +42,7 @@ namespace APIActividadesMAUI.Services
         public async Task Eliminar(int id)
         {
             var response = await cliente.DeleteAsync("api/Actividades/" + id);
-            var departamentoId = loginService.GetDepartmentoId();
+            var departamentoId = await loginService.GetDepartmentoId();
 
             if (response.IsSuccessStatusCode)
             {
@@ -53,7 +53,7 @@ namespace APIActividadesMAUI.Services
         public async Task Editar(ActividadDTO dto)
         {
             // Espera a que se complete la tarea y obtiene el valor de departamentoid
-            var departamentoId = loginService.GetDepartmentoId();
+            var departamentoId = await loginService.GetDepartmentoId();
 
 
             // Verifica si departamentoid no es nulo antes de continuar
@@ -96,7 +96,7 @@ namespace APIActividadesMAUI.Services
                                 Id = actividad.Id,
                                 Descripcion = actividad.Descripcion??"",
                                 Estado = actividad.Estado,
-                                FechaRealizacion = actividad.FechaRealizacion ?? DateTime.Now,
+                                FechaRealizacion = actividad.FechaRealizacion ?? DateTime.Now.Date,
                                 FechaActualizacion = actividad.FechaActualizacion,
                                 FechaCreacion = actividad.FechaCreacion,
                                 IdDepartamento = actividad.IdDepartamento,
@@ -136,7 +136,8 @@ namespace APIActividadesMAUI.Services
                         {
                             ActualizarDatos?.Invoke();
                         });
-                        Preferences.Set($"UltimaFechaModificacionDepartamento{id}", response.Max(x => (x.FechaCreacion > x.FechaActualizacion) ? x.FechaCreacion : x.FechaActualizacion));
+                        Preferences.Set($"UltimaFechaModificacionDepartamento{id}", response.Max(x => (x.FechaCreacion > x.FechaActualizacion)?x.FechaCreacion:x.FechaActualizacion));
+
                     }
                 }
             }

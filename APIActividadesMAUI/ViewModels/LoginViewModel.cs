@@ -39,11 +39,12 @@ namespace APIActividadesMAUI.ViewModels
                     Username = username,
                     Password = password
                 });
-                if(tokensito != null)
+                if (tokensito != null)
                 {
                     await SecureStorage.SetAsync("tkn", tokensito);
-                    int departamentoid = loginService.GetDepartmentoId();
+                    int departamentoid = await loginService.GetDepartmentoId();
                     await actividadesService.GetActividades(departamentoid);
+
                     await Shell.Current.GoToAsync("//ListadoActividades");
                 }
                 else
@@ -53,9 +54,10 @@ namespace APIActividadesMAUI.ViewModels
             }
             else
             {
-                Errores = "";
+                Errores = "El usuario y la contraseña no pueden estar vacíos";
             }
         }
+
 
         async void ValidarToken()
         {

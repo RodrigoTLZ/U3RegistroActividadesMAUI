@@ -23,7 +23,6 @@ namespace APIActividadesITESRC.Controllers
         [HttpPost("Publicar")]
         public IActionResult PublicarActividad(ActividadDTO dto)
         {
-            var actividadesDepartamento = int.Parse(User.Identities.SelectMany(ci => ci.Claims).FirstOrDefault(c => c.Type == "DepartamentoId").Value);
 
             ActividadValidator validator = new();
             var resultados = validator.Validate(dto);
@@ -35,11 +34,11 @@ namespace APIActividadesITESRC.Controllers
                     Descripcion = dto.Descripcion,
                     FechaCreacion = DateTime.UtcNow,
                     FechaActualizacion = DateTime.UtcNow,
-                    IdDepartamento = actividadesDepartamento,
+                    IdDepartamento = dto.IdDepartamento,
                     Estado = 1,
                     Titulo = dto.Titulo,
-                    FechaRealizacion = dto.FechaRealizacion
-                };
+                    FechaRealizacion = dto.FechaRealizacion.HasValue ? new DateOnly(dto.FechaRealizacion.Value.Year, dto.FechaRealizacion.Value.Month, dto.FechaRealizacion.Value.Day) : DateOnly.FromDateTime(DateTime.Now)
+            };
                 Repository.Insert(entity);
                 return Ok();
             }
@@ -62,7 +61,7 @@ namespace APIActividadesITESRC.Controllers
                 Id = x.Id,
                 Titulo = x.Titulo,
                 Descripcion = x.Descripcion,
-                FechaRealizacion = x.FechaRealizacion,
+                FechaRealizacion = x.FechaRealizacion.HasValue ? new DateTime(x.FechaRealizacion.Value.Year, x.FechaRealizacion.Value.Month, x.FechaRealizacion.Value.Day) : DateTime.Now,
                 IdDepartamento = x.IdDepartamento,
                 Estado = x.Estado,
                 FechaActualizacion = x.FechaActualizacion,
@@ -93,7 +92,7 @@ namespace APIActividadesITESRC.Controllers
                         entidadActividad.Descripcion = dto.Descripcion;
                         entidadActividad.Estado = dto.Estado;
                         entidadActividad.FechaActualizacion = DateTime.UtcNow;
-                        entidadActividad.FechaRealizacion = dto.FechaRealizacion;
+                    entidadActividad.FechaRealizacion = dto.FechaRealizacion.HasValue ? new DateOnly(dto.FechaRealizacion.Value.Year, dto.FechaRealizacion.Value.Month, dto.FechaRealizacion.Value.Day) : DateOnly.FromDateTime(DateTime.Now);
                         Repository.Update(entidadActividad);
                         return Ok();
                     

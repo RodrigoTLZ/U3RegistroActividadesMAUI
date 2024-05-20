@@ -34,31 +34,26 @@ namespace APIActividadesMAUI.Services
                 return null;//implementar error
             }
         }
-        public string GetToken()
+        public async Task<string> GetToken()
         {
-            string token = SecureStorage.GetAsync("tkn").Result;
+            string token = await SecureStorage.GetAsync("tkn");
             return token;
         }
 
-
-
-        public int GetDepartmentoId()
+        public async Task<int> GetDepartmentoId()
         {
-            var token = GetToken();
-            // Inicializa el manejador del token
+            var token = await GetToken();
             var handler = new JwtSecurityTokenHandler();
 
-            // Si el token está en un formato JWT, puedes decodificarlo así
             if (handler.CanReadToken(token))
             {
                 var jwtToken = handler.ReadJwtToken(token);
 
-                // Obtén la claim del DepartamentoId
-                var departmentClaim = jwtToken.Claims.FirstOrDefault(claim => claim.Type == "DepartamentoId");
+                var departamentoclaim = jwtToken.Claims.FirstOrDefault(claim => claim.Type == "DepartamentoId");
 
-                if (departmentClaim != null)
+                if (departamentoclaim != null)
                 {
-                    return int.Parse(departmentClaim.Value);
+                    return int.Parse(departamentoclaim.Value);
                 }
             }
             return 0;
