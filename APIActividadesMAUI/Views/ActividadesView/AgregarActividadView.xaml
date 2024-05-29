@@ -37,6 +37,7 @@
             
             <StackLayout Orientation="Horizontal" HorizontalOptions="Center">
                 <Button Text="&#10060; Cancelar" Margin="5,10" WidthRequest="160" Command="{Binding ActividadesViewModel.CancelarCommand}"/>
+                <Button Text="&#128190; Guardar borrador" Margin="5,10" WidthRequest="170" Command="{Binding ActividadesViewModel.AgregarCommand}"/>
                 <Button Text="&#128190; Agregar Actividad" Margin="5,10" WidthRequest="170" Command="{Binding ActividadesViewModel.AgregarCommand}"/>
             </StackLayout>
 
