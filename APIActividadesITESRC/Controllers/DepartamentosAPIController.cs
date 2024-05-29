@@ -9,6 +9,7 @@ using System.Reflection.Metadata.Ecma335;
 using System.Text;
 using APIActividadesITESRC.Helper;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http.HttpResults;
 
 namespace APIActividadesITESRC.Controllers
 {
@@ -17,9 +18,11 @@ namespace APIActividadesITESRC.Controllers
     public class DepartamentosAPIController : ControllerBase
     {
         public DepartamentosRepository Repository { get; }
-        public DepartamentosAPIController(DepartamentosRepository repository)
+        public ActividadesRepository ActividadesRepository { get; }
+        public DepartamentosAPIController(DepartamentosRepository repository, ActividadesRepository actividadesRepository)
         {
-            Repository = repository;       
+            Repository = repository;   
+            ActividadesRepository = actividadesRepository;
         }
 
         [HttpPost("Agregar")]
@@ -105,9 +108,18 @@ namespace APIActividadesITESRC.Controllers
             }
             else
             {
-                Repository.Delete(entidadDepartamento);
-                return Ok();
+                var actividadesdepartamento = ActividadesRepository.GetAll().Where(x=>x.IdDepartamento == id);
+                if (actividadesdepartamento.Any())
+                {
+                    foreach (var item in actividadesdepartamento)
+                    {
+                        ActividadesRepository.Delete(item);
+                    }
+                    Repository.Delete(entidadDepartamento);
+                    return Ok();
+                }
             }
+            return NotFound();
         }
 
     }

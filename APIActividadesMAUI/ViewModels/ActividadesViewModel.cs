@@ -85,6 +85,18 @@ namespace APIActividadesMAUI.ViewModels
         }
 
         [RelayCommand]
+        public async void VerBorradores()
+        {
+            ListadoActividades.Clear();
+            var iddepartamento = await loginService.GetDepartmentoId();
+            foreach (var item in repositoryActividades.GetAll().OrderBy(x => x.FechaCreacion).Where(x => x.Estado == 0 && x.IdDepartamento == iddepartamento))
+            {
+                ListadoActividades.Add(item);
+            }
+            await Shell.Current.GoToAsync("//ListadoBorradores");
+        }
+
+        [RelayCommand]
         public async Task Agregar()
         {
             try
@@ -186,7 +198,7 @@ namespace APIActividadesMAUI.ViewModels
         void ActualizarActividades()
         {
             ListadoActividades.Clear();
-            foreach (var item in repositoryActividades.GetAll().OrderBy(x=>x.FechaCreacion))
+            foreach (var item in repositoryActividades.GetAll().OrderBy(x=>x.FechaCreacion).Where(x=>x.Estado == 1))
             {
                 ListadoActividades.Add(item);
             }

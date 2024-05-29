@@ -86,14 +86,20 @@ namespace APIActividadesMAUI.ViewModels
                             Password = DepartamentoSeleccionado.Password,
                             Username = DepartamentoSeleccionado.Username
                         };
-                        
+                        await service.EditarDepartamento(depa);
+                        Cancelar();
+                    }
+                    else
+                    {
+                        Error = string.Join("\n", departamentovalidado.Errors.Select(x => x.ErrorMessage));
+
                     }
                 }
             }
-            catch (Exception)
+            catch (Exception ex)
             {
+                Error = ex.Message;
 
-                throw;
             }
         }
         
@@ -108,7 +114,7 @@ namespace APIActividadesMAUI.ViewModels
             {
                 if(Departamento!= null)
                 {
-                    await service.EliminarDepartamento(Departamento);
+                    await service.EliminarDepartamento(Departamento.Id);
                     Cancelar();
                 }
             }
@@ -128,7 +134,6 @@ namespace APIActividadesMAUI.ViewModels
             Shell.Current.GoToAsync("//ListadoActividades");
         }
 
-        DepartamentoValidator validador = new();
 
         [RelayCommand]
         public async Task Agregar()

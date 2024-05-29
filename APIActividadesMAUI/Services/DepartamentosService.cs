@@ -14,8 +14,10 @@ namespace APIActividadesMAUI.Services
     {
         HttpClient cliente;
         Repositories.RepositoryGeneric<Departamento> repository = new();
+        Repositories.RepositoryGeneric<Actividad> actividadesRepository = new();
         public event Action? ActualizarDatos;
         LoginService loginService = new();
+       
 
         
         public DepartamentosService()
@@ -47,10 +49,18 @@ namespace APIActividadesMAUI.Services
         {
             try
             {
-                var response = await cliente.DeleteAsync($"api/DepartamentosAPI/Eliminar/{id}");
+                var response = await cliente.DeleteAsync($"api/DepartamentosAPI/{id}");
 
                 if(response.IsSuccessStatusCode)
                 {
+                    var actividadesdepartamento = actividadesRepository.GetAll().Where(x => x.IdDepartamento == id);
+                    if (actividadesdepartamento.Any())
+                    {
+                        foreach (var item in actividadesdepartamento)
+                        {
+                            actividadesRepository.Delete(item);
+                        }
+                    }
                     var departamento = repository.Get(id);
                     repository.Delete(departamento);
                 }
@@ -58,6 +68,23 @@ namespace APIActividadesMAUI.Services
             catch (Exception)
             {
 
+                throw;
+            }
+        }
+
+        public async Task EditarDepartamento(DepartamentoDTO dto)
+        {
+            try
+            {
+                var response = await cliente.PutAsJsonAsync($"api/DepartamentosAPI/{dto.Id}", dto.Id);
+                if (response.IsSuccessStatusCode)
+                {
+                    await GetDepartamentos();
+                }
+
+            }
+            catch (Exception ex)
+            {
                 throw;
             }
         }
