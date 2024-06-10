@@ -24,6 +24,10 @@
     <ShellContent ContentTemplate="{DataTemplate views:ListadoActividadesView}"
                   Route="ListadoActividades"/>
 
+    <ShellContent ContentTemplate="{DataTemplate views:ListadoActividadesAdminView}"
+              Route="ListadoActividadesAdmin"/>
+
+
     <ShellContent ContentTemplate="{DataTemplate viewsA:AgregarActividadView}"
                   Route="AgregarActividad"/>
     <ShellContent ContentTemplate="{DataTemplate viewsA:EditarActividadView}"

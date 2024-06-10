@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="APIActividadesMAUI.Views.ListadoActividadesAdminView"
+             Title="ListadoActividadesAdminView">
+
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Text="Departamentos" Command="{Binding DepartamentosViewModel.VerDepartamentos}"></ToolbarItem>
+    </ContentPage.ToolbarItems>
+    
+    <AbsoluteLayout>
+        <!-- Envolver el Grid existente en un AbsoluteLayout -->
+        <Grid Margin="0" AbsoluteLayout.LayoutBounds="0,0,1,1" AbsoluteLayout.LayoutFlags="All">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="0.07*"></RowDefinition>
+                <RowDefinition Height="0.78*"></RowDefinition>
+            </Grid.RowDefinitions>
+            <Label Grid.Row="0" Text="Lista de Actividades" FontSize="25" HorizontalTextAlignment="Center" TextColor="White" VerticalTextAlignment="Center" FontAttributes="Bold" 
+               HorizontalOptions="FillAndExpand" Padding="0,10,0,10" BackgroundColor="#2B0B98" FontFamily="Verdana" />
+
+            <!-- Colección de actividades -->
+            <CollectionView Margin="10" ItemsSource="{Binding ActividadesViewModel.ListadoActividades}" Grid.Row="1" x:Name="activitiesCollectionView"
+                        SelectionMode="Single"
+                        EmptyView="No hay actividades agregadas">
+                <CollectionView.ItemTemplate>
+                    <DataTemplate>
+                        <Frame BackgroundColor="#f2f2f2" BorderColor="#2B0B98" Padding="3" Margin="15">
+                            <StackLayout Padding="12" Margin="0,5,0,0" BackgroundColor="#f2f2f2">
+                                <Label Text="{Binding Titulo}" FontSize="18" FontAttributes="Bold" />
+                                <Label Text="{Binding Descripcion}" FontSize="13" MaxLines="3" Margin="0,7,0,10" LineBreakMode="CharacterWrap" LineHeight="1.1" />
+                                <Label Text="{Binding FechaRealizacion, StringFormat='{0:dd/MM/yyyy}'}"/>
+                                <StackLayout Orientation="Horizontal" HorizontalOptions="StartAndExpand" Margin="0,20,0,0">
+                                    <Button Margin="0,0,10,0" Text="Editar" Command="{Binding Source={x:Reference Name=activitiesCollectionView}, Path=BindingContext.ActividadesViewModel.VerEditarActividadCommand}"
+                                    CommandParameter="{Binding Id}" />
+                                    <Button Text="Eliminar" Command="{Binding Source={x:Reference Name=activitiesCollectionView}, Path=BindingContext.ActividadesViewModel.VerEliminarActividadCommand}"
+                                    CommandParameter="{Binding Id}" />
+                                </StackLayout>
+                            </StackLayout>
+                        </Frame>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+        </Grid>
+
+        <!-- Botón flotante -->
+        <Button Text="+" Command="{Binding ActividadesViewModel.NuevoCommand}"
+            AbsoluteLayout.LayoutBounds="1,1,AutoSize,AutoSize"
+            AbsoluteLayout.LayoutFlags="PositionProportional"
+            BackgroundColor="#2B0B98"
+            TextColor="White"
+            CornerRadius="30"
+            WidthRequest="60"
+            FontSize="35"
+            HeightRequest="60"
+            VerticalOptions="End"
+            HorizontalOptions="End"
+            Margin="25" />
+    </AbsoluteLayout>
+</ContentPage>

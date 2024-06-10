@@ -45,7 +45,16 @@ namespace APIActividadesMAUI.ViewModels
                     int departamentoid = await loginService.GetDepartmentoId();
                     await actividadesService.GetActividades(departamentoid);
 
-                    await Shell.Current.GoToAsync("//ListadoActividades");
+                    var rol = await loginService.GetRol();
+                    if(rol == "Admin")
+                    {
+
+                    }
+                    else
+                    {
+                        await Shell.Current.GoToAsync("//ListadoActividades");
+                    }
+                    
                 }
                 else
                 {

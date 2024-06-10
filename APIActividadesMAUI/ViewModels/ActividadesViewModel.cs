@@ -107,7 +107,6 @@ namespace APIActividadesMAUI.ViewModels
                     var resultado = validador.Validate(actividad);
                     if (resultado.IsValid)
                     {
-                        actividad.FechaRealizacion = actividad.FechaRealizacion;
                         await service.Agregar(actividad);
                         ActualizarActividades();
                         Cancelar();

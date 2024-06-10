@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using System.Security.Principal;
 using CommunityToolkit.Mvvm.ComponentModel;
 using System.IdentityModel.Tokens.Jwt;
+using System.Security.Claims;
 
 namespace APIActividadesMAUI.Services
 {
@@ -57,6 +58,25 @@ namespace APIActividadesMAUI.Services
                 }
             }
             return 0;
+        }
+
+        public async Task<string> GetRol()
+        {
+            var token = await GetToken();
+            var handler = new JwtSecurityTokenHandler();
+
+            if (handler.CanReadToken(token))
+            {
+                var jwtToken = handler.ReadJwtToken(token);
+
+                var roldepartamento = jwtToken.Claims.FirstOrDefault(claim => claim.Type == ClaimTypes.Role);
+
+                if (roldepartamento != null)
+                {
+                    return roldepartamento.Value;
+                }
+            }
+            return "Este departamento no cuenta con ningun rol asignado.";
         }
 
 
