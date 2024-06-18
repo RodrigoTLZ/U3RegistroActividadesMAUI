@@ -13,7 +13,7 @@ namespace APIActividadesITESRC.Repositories
 
         public IEnumerable<Departamentos> GetAll()
         {
-            return Context.Departamentos.OrderBy(x => x.Nombre).Include(x=>x.InverseIdSuperiorNavigation);
+            return Context.Departamentos.OrderBy(x=>x.Nombre).Include(x=>x.InverseIdSuperiorNavigation);
         }
 
         public Departamentos? GetById(int id)

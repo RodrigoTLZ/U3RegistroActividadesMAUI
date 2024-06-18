@@ -8,7 +8,7 @@ using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
 
-builder.Services.AddDbContext<ItesrcneActividadesContext>(x => x.UseMySql("server=187.216.2.135;database=itesrcne_actividades;user=itesrcne_deptos;password=sistemaregistrotec24", Microsoft.EntityFrameworkCore.ServerVersion.Parse("10.3.29-mariadb")));
+builder.Services.AddDbContext<ItesrcneActividadesContext>(x => x.UseMySql("server=labsystec.net;database=labsyste_doubled;user=labsyste_doubled;password=xs~o714N5", Microsoft.EntityFrameworkCore.ServerVersion.Parse("10.3.29-mariadb")));
 builder.Services.AddTransient<DepartamentosRepository>();
 builder.Services.AddTransient<ActividadesRepository>();
 var connectionString = builder.Configuration.GetConnectionString("ActividadesConnectionString");

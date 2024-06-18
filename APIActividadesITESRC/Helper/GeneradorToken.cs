@@ -14,7 +14,7 @@ namespace APIActividadesITESRC.Helper
             this.configuration = configuration;
         }
 
-        public string GetToken(string username,string role, int id, List<Claim> claims)
+        public string GetToken(string username,string role, int? idSuperior, int id, List<Claim> claims)
         {
             JwtSecurityTokenHandler handler = new();
 
@@ -28,7 +28,8 @@ namespace APIActividadesITESRC.Helper
                 new Claim(ClaimTypes.Role, role),
                 new Claim(JwtRegisteredClaimNames.Iss, issuer),
                 new Claim(JwtRegisteredClaimNames.Aud, audience),
-                new Claim("DepartamentoId", id.ToString())
+                new Claim("DepartamentoId", id.ToString()),
+                new Claim("IdDepartamentoSuperior", idSuperior.ToString()??""),
             };
 
             JwtSecurityToken jwtSecurity = new(

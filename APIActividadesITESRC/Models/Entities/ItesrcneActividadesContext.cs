@@ -43,15 +43,20 @@ public partial class ItesrcneActividadesContext : DbContext
             entity.Property(e => e.Estado)
                 .HasColumnType("int(11)")
                 .HasColumnName("estado");
+
+
             entity.Property(e => e.FechaActualizacion)
-                .ValueGeneratedOnAddOrUpdate()
                 .HasDefaultValueSql("current_timestamp()")
                 .HasColumnType("timestamp")
                 .HasColumnName("fecha_actualizacion");
+
+
             entity.Property(e => e.FechaCreacion)
                 .HasDefaultValueSql("current_timestamp()")
                 .HasColumnType("timestamp")
                 .HasColumnName("fecha_creacion");
+
+
             entity.Property(e => e.FechaRealizacion).HasColumnName("fecha_realizacion");
             entity.Property(e => e.IdDepartamento)
                 .HasColumnType("int(11)")

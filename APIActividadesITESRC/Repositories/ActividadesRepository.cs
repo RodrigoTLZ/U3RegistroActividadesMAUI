@@ -35,7 +35,11 @@ namespace APIActividadesITESRC.Repositories
 
         public void Delete(Actividades actividad)
         {
-            Context.Remove(actividad);
+            Context.Actividades.Remove(actividad);
+        }
+
+        public void Save()
+        {
             Context.SaveChanges();
         }
     }

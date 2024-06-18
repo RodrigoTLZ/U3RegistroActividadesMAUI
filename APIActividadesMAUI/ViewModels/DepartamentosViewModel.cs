@@ -1,4 +1,5 @@
-﻿using APIActividadesMAUI.Models.DTOs;
+﻿using Android.Telephony;
+using APIActividadesMAUI.Models.DTOs;
 using APIActividadesMAUI.Models.Entities;
 using APIActividadesMAUI.Models.Validators;
 using APIActividadesMAUI.Services;
@@ -41,6 +42,14 @@ namespace APIActividadesMAUI.ViewModels
         {
             Departamento = new();
             Shell.Current.GoToAsync("//AgregarDepartamento");
+        }
+
+
+        [RelayCommand]
+        public void VerDepartamentos()
+        {
+            ActualizarDepartamentos();
+            Shell.Current.GoToAsync("//ListadoActividadesAdmin");
         }
 
         [RelayCommand]
@@ -131,7 +140,7 @@ namespace APIActividadesMAUI.ViewModels
         {
             Departamento = null;
             Error = "";
-            Shell.Current.GoToAsync("//ListadoActividades");
+            Shell.Current.GoToAsync("//ListadoActividadesAdmin");
         }
 
 

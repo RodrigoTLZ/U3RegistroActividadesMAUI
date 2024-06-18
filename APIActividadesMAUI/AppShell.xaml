@@ -17,16 +17,17 @@
         <vm:AppShellBindingContext></vm:AppShellBindingContext>
     </Shell.BindingContext>
 
+
     <ShellContent
         ContentTemplate="{DataTemplate views:LoginView}"
         Route="Login" />
 
-    <ShellContent ContentTemplate="{DataTemplate views:ListadoActividadesView}"
-                  Route="ListadoActividades"/>
 
+    <ShellContent ContentTemplate="{DataTemplate views:ListadoActividadesView}"
+              Route="ListadoActividades"/>
+    
     <ShellContent ContentTemplate="{DataTemplate views:ListadoActividadesAdminView}"
               Route="ListadoActividadesAdmin"/>
-
 
     <ShellContent ContentTemplate="{DataTemplate viewsA:AgregarActividadView}"
                   Route="AgregarActividad"/>

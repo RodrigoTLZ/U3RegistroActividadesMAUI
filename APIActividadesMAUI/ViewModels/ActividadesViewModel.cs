@@ -49,6 +49,13 @@ namespace APIActividadesMAUI.ViewModels
 
 
         [RelayCommand]
+        public void VerListadoActividades()
+        {
+            Shell.Current.GoToAsync("//ListadoActividades");
+        }
+
+
+        [RelayCommand]
         public void VerEditarActividad(int id)
         {
             ActividadSeleccionada = repositoryActividades.Get(id);

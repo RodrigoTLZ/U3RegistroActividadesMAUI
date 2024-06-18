@@ -74,9 +74,18 @@ namespace APIActividadesMAUI.ViewModels
             if(tokenazo != null)
             {
                 var tokenvalido = await loginService.Validar(tokenazo);
+                var rol = await loginService.GetRol();
                 if (tokenvalido)
                 {
-                    await Shell.Current.GoToAsync("//ListaActividades");
+                    if(rol == "Admin")
+                    {
+                        await Shell.Current.GoToAsync("//ListaActividadesAdmin");
+                    }
+                    else
+                    {
+                        await Shell.Current.GoToAsync("//ListaActividades");
+                    }
+                    
                 }
                 else
                 {

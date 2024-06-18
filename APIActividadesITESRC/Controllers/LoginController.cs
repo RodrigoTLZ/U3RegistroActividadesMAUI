@@ -33,6 +33,7 @@ namespace APIActividadesITESRC.Controllers
             }
                     var token = jwtHelper.GetToken(usuario.Username,
                         usuario.IdSuperior == null ? "Admin":"Departamento",
+                        usuario.IdSuperior,
                         usuario.Id,
                         new List<Claim> { new Claim("Id", usuario.Id.ToString()) });
 
@@ -43,17 +44,14 @@ namespace APIActividadesITESRC.Controllers
         [HttpGet("GetDepartamentoId")]
         public IActionResult GetDepartamentoId()
         {
-
             if(usuario != null)
             {
                 return Ok(usuario.Id);
             }
             else
             {
-                return BadRequest();
+                return BadRequest("Ha ocurrido un problema al tratar de obtener el ID del departamento.");
             }
-
         }
-
     }
 }
