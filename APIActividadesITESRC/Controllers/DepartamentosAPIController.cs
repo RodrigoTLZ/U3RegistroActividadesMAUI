@@ -60,6 +60,8 @@ namespace APIActividadesITESRC.Controllers
 
 
         [HttpGet("ObtenerDepartamentos")]
+        [Authorize(Roles = "Departamento,Admin")]
+
         public IActionResult GetAllDepartamentos()
         {
             try
@@ -81,6 +83,29 @@ namespace APIActividadesITESRC.Controllers
                 return BadRequest("Ha ocurrido un problema al tratar de obtener los departamentos.");
             }
              
+        }
+
+        [HttpGet("ObtenerDepartamentosBasico")]
+        [Authorize(Roles = "Departamento,Admin")]
+
+        public IActionResult GetAllDepartamentosBasico()
+        {
+            try
+            {
+                var departamentos = Repository.GetAll().Where(x => x.Username.Contains("@equipo7")).Select(x => new DepartamentoDTO
+                {
+                    Id = x.Id,
+                    Username = x.Username
+                });
+
+                return Ok(departamentos);
+            }
+            catch (Exception)
+            {
+
+                return BadRequest("Ha ocurrido un problema al tratar de obtener los departamentos.");
+            }
+
         }
 
 
