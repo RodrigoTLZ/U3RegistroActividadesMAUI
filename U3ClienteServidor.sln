@@ -3,8 +3,6 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.8.34525.116
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MAUIActividadesITESRC", "APIActividadesMAUI\MAUIActividadesITESRC.csproj", "{14E5C28B-642A-40AD-B4EC-5B2D3BAFE654}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "APIActividadesITESRC", "APIActividadesITESRC\APIActividadesITESRC.csproj", "{20D21866-EC7A-4C77-B8F2-3C0FD95A341D}"
 EndProject
 Global
@@ -13,12 +11,6 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{14E5C28B-642A-40AD-B4EC-5B2D3BAFE654}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{14E5C28B-642A-40AD-B4EC-5B2D3BAFE654}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{14E5C28B-642A-40AD-B4EC-5B2D3BAFE654}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
-		{14E5C28B-642A-40AD-B4EC-5B2D3BAFE654}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{14E5C28B-642A-40AD-B4EC-5B2D3BAFE654}.Release|Any CPU.Build.0 = Release|Any CPU
-		{14E5C28B-642A-40AD-B4EC-5B2D3BAFE654}.Release|Any CPU.Deploy.0 = Release|Any CPU
 		{20D21866-EC7A-4C77-B8F2-3C0FD95A341D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{20D21866-EC7A-4C77-B8F2-3C0FD95A341D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{20D21866-EC7A-4C77-B8F2-3C0FD95A341D}.Release|Any CPU.ActiveCfg = Release|Any CPU
